@@ -1,6 +1,31 @@
 import { Button, VerticalBox } from "std-widgets.slint";
 
+component LogoWindow inherits Rectangle {
+    width: 64px;
+    height: 64px;
+    background: #3960D5;
+
+    //VerticalLayout {
+    HorizontalLayout {
+        Image {
+            in property <image> logo_window_image: @image-url("images/cogs.png");
+
+            //source: @image-url("images/cogs.png");
+            source: logo_window_image;
+            width: parent.width;
+            height: parent.height;
+        }
+    }
+}
+
+// Main window
 export component AppWindow inherits Window {
+
+    preferred-width: 1400px;
+    preferred-height: 620px;
+
+    LogoWindow {}
+
     in-out property<int> counter: 42;
     callback request-increase-value();
     VerticalBox {
