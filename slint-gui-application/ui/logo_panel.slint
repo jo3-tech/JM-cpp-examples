@@ -1,0 +1,28 @@
+import { Layout, Colours } from "theme.slint";
+
+export component LogoPanel {
+  Rectangle {
+    width: Layout.panel_width;
+    height: 150px;
+    background: Colours.panel_background;
+
+    GridLayout {
+      padding: 10px;
+      Image {
+        source: @image-url("images/cogs.png");
+        width: self.source.width * 0.5px;
+        height: self.source.height * 0.5px;
+        row: 0;
+        col: 0;
+      }
+      Image {
+        source: @image-url("images/cloud.png");
+        width: self.source.width * 0.5px;
+        height: self.source.height * 0.5px;
+        row: 2;
+        col: 2;
+      }      
+    }
+
+  }
+}
