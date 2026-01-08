@@ -1,28 +1,34 @@
 import { Button, VerticalBox } from "std-widgets.slint";
+import { Layout } from "theme.slint";
 import { LogoPanel } from "logo_panel.slint";
+import { MainPanel } from "main_panel.slint";
 
 // Main window
+
 export component AppWindow inherits Window {
 
-    //preferred-width: 960px;
-    //preferred-height: 540px;
-    width: 960px;
-    height: 540px;
+  //preferred-width: 960px;
+  //preferred-height: 540px;
+  width: Layout.panel_x * 2 + Layout.panel_width;
+  height: 540px;
 
+  VerticalLayout {
+    MainPanel {}
     LogoPanel {}
+  }
 /*
-    in-out property<int> counter: 42;
-    callback request-increase-value();
-    VerticalBox {
-        Text {
-            text: "Counter: \{root.counter}";
-        }
-        Button {
-            text: "Increase value";
-            clicked => {
-                root.request-increase-value();
-            }
-        }
-     }
+  in-out property<int> counter: 42;
+  callback request-increase-value();
+  VerticalBox {
+    Text {
+      text: "Counter: \{root.counter}";
+    }
+    Button {
+      text: "Increase value";
+      clicked => {
+        root.request-increase-value();
+      }
+    }
+  }
 */
 }
