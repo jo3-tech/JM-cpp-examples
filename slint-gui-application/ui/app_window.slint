@@ -3,10 +3,6 @@ import { Layout } from "layout.slint";
 import { Theme } from "theme.slint";
 import { HomeMainPanel, HomeIconPanel } from "components.slint";
 
-component PlaceHolderPanel {}
-
-// Main window
-
 export component AppWindow inherits Window {
   title: "Slint GUI Application";
 
@@ -36,25 +32,15 @@ export component AppWindow inherits Window {
   GridLayout {
     padding: Layout.window_padding;
     spacing: Layout.panel_spacing;
-    //*
     HomeMainPanel {
       row: 0;
       col: 0;
       rowspan: 1;
     }
-    //*/
-    //*
     HomeIconPanel {
       row: 1;
       col: 0;
     }
-    //*/
-    /*
-    PlaceHolderPanel {
-      row: 0;
-      col: 1;
-    }
-    */
   }
 
 /*  

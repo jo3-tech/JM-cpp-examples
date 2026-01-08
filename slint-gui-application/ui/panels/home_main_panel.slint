@@ -1,12 +1,58 @@
-import { Button, VerticalBox } from "std-widgets.slint";
+import { Button, VerticalBox, HorizontalBox, GridBox } from "std-widgets.slint";
 import { Layout } from "../layout.slint";
 import { Theme } from "../theme.slint";
+import { Separator } from "../primitives.slint";
 
 export component HomeMainPanel {
   Rectangle {
     border-radius: Theme.panel_border_radius;
     background: Theme.panel_background;
-//*
+
+    VerticalLayout {
+      padding: Layout.panel_padding;
+      
+      GridBox {
+        Row { // 0
+          Button { // col 0
+            text: "Button 1";
+          }
+          Separator {} // col 1
+          Button { // col 2
+            text: "Button 2";
+          }
+          Separator { col: 10; }
+        }
+        Row { // 1
+          Text { //col 0
+            text: "Click to do \nsomething";
+          }
+          Text {
+            text: "Click to do \nsomething";
+            col: 2;
+          }
+        }
+        Row { Separator {} }
+      }
+
+      GridBox {
+          Button {
+            text: "Button 3";
+            row: 0;
+            col: 0;
+          }
+          Separator { 
+            row: 1; 
+            col: 0; 
+          }
+          Button {
+            text: "Button 4";
+            row: 2;
+            col: 0;
+          }
+          Separator { row: 0; col: 1; }
+      }
+  }
+/*
     in-out property<int> counter: 42;
     callback request-increase-value();    
     VerticalBox {
@@ -20,6 +66,6 @@ export component HomeMainPanel {
         }
       }
     }
-//*/  
+*/  
   }
 }

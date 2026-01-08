@@ -1,37 +1,38 @@
 import { Layout } from "../layout.slint";
 import { Theme } from "../theme.slint";
 
-component PlaceHolderImage {} //inherits Image {}
-
-export component HomeIconPanel { 
+export component HomeIconPanel {
   Rectangle {
     border-radius: Theme.panel_border_radius;
     background: Theme.panel_background;
 
-    in property <length> image_scale: 0.5px;
+    in property <length> image_scale: 0.8px;
 
     GridLayout {
       padding: Layout.panel_padding;
       Image {
         source: @image-url("../images/cogs.png");
-        preferred-width: self.source.width * image_scale;
-        preferred-height: self.source.height * image_scale;
-        max-width: self.source.width * 1px;
-        max-height: self.source.height * 1px;
         row: 0;
         col: 0;
-        //image-fit: fill;
-      }
-      PlaceHolderImage {}
-      Image {
-        source: @image-url("../images/cloud.png");
+        vertical-alignment: ImageVerticalAlignment.top;
         preferred-width: self.source.width * image_scale;
         preferred-height: self.source.height * image_scale;
         max-width: self.source.width * 1px;
         max-height: self.source.height * 1px;
+        //image-fit: fill;
+        colorize: Colors.goldenrod;
+      }
+      Image {
+        source: @image-url("../images/cloud.png");
         row: 1;
         col: 2;
+        vertical-alignment: ImageVerticalAlignment.bottom;
+        preferred-width: self.source.width * image_scale;
+        preferred-height: self.source.height * image_scale;
+        max-width: self.source.width * 1px;
+        max-height: self.source.height * 1px;
         //image-fit: fill;
+        colorize: skyblue;
       }      
     }
   }
