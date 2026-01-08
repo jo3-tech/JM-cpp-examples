@@ -1,24 +1,65 @@
-import { Button, VerticalBox } from "std-widgets.slint";
-import { Layout } from "theme.slint";
-import { LogoPanel } from "logo_panel.slint";
-import { MainPanel } from "main_panel.slint";
+//import { Button, VerticalBox } from "std-widgets.slint";
+import { Layout } from "layout.slint";
+import { Theme } from "theme.slint";
+import { HomeMainPanel, HomeIconPanel } from "components.slint";
+
+component PlaceHolderPanel {}
 
 // Main window
 
 export component AppWindow inherits Window {
+  title: "Slint GUI Application";
 
-  //preferred-width: 960px;
-  //preferred-height: 540px;
-  width: Layout.panel_x * 2 + Layout.panel_width;
-  height: 540px;
-
-  VerticalLayout {
-    MainPanel {}
-    LogoPanel {}
+  MenuBar {
+    Menu {
+      title: @tr("File");
+      MenuItem {
+        title: @tr("New");
+        activated => { file-new();}
+      }
+      //MenuSeparator {}
+      MenuItem {
+        title: @tr("Open");
+        activated => { file-open(); }
+      }
+    }
   }
-/*
+
+  callback file-new();
+  callback file-open();
+
+  preferred-width: 960px;
+  preferred-height: 540px;
+
+  default-font-size: 20px;
+
+  GridLayout {
+    padding: Layout.window_padding;
+    spacing: Layout.panel_spacing;
+    //*
+    HomeMainPanel {
+      row: 0;
+      col: 0;
+      rowspan: 1;
+    }
+    //*/
+    //*
+    HomeIconPanel {
+      row: 1;
+      col: 0;
+    }
+    //*/
+    /*
+    PlaceHolderPanel {
+      row: 0;
+      col: 1;
+    }
+    */
+  }
+
+/*  
   in-out property<int> counter: 42;
-  callback request-increase-value();
+  callback request-increase-value();    
   VerticalBox {
     Text {
       text: "Counter: \{root.counter}";
