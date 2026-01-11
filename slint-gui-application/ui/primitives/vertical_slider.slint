@@ -15,7 +15,6 @@ export component VerticalSlider {
 
   in-out property<bool> text-enabled: true;
   in-out property<bool> text-read-only: false;
-  in-out property<bool> text-has-focus: false;
 
   GridBox {
     padding: 0px;
@@ -38,10 +37,14 @@ export component VerticalSlider {
           let value-int:int = maximum - self.value;
           value = value-int;
         }
-        else { value = self.value; }
+        else { value = maximum - self.value; }
 
         slider_mask.value = value;
         slider_text.text = value;
+      }
+
+      released() => {
+        has-focus = false;
       }
     }
 
@@ -73,26 +76,25 @@ export component VerticalSlider {
       read-only: text-read-only;
       text: value;
       edited(text) => {
-        text-has-focus = has-focus;
+        if (!text.is-float()) { return; }
+
         value = text.to-float();
 
         if (!use-float) {
-          let value-int:int = value;
-          value = value-int;
+          let value_int:int = value;
+          value = value_int;
+          self.text = value;
         }
 
         if (value > maximum) {
           value = maximum;
+          self.text = value;
         }
         else if (value < minimum) { 
           value = minimum;
-        }
-        else if (text == "-") { // Allow negative values in-case min/max is < 0.
-          value = minimum;
-          return;
+          self.text = value;
         }
 
-        self.text = value;
         slider_used.value = maximum - value;
         slider_mask.value = value;
       }
