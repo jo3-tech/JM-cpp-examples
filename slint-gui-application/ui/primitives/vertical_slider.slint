@@ -1,0 +1,102 @@
+import { GridBox, Slider, TextEdit } from "std-widgets.slint";
+
+export component VerticalSlider {
+
+  in-out property<string> title: "";
+
+  in-out property<bool> enabled: true;
+  in-out property<bool> has-focus: false;
+  in-out property<float> value: 0;
+  in-out property<float> step: 1;
+  in-out property<float> minimum: 0;
+  in-out property<float> maximum: 100;
+
+  in-out property <bool> use-float: false;
+
+  in-out property<bool> text-enabled: true;
+  in-out property<bool> text-read-only: false;
+  in-out property<bool> text-has-focus: false;
+
+  GridBox {
+    out property<int> value-int: value;
+
+    padding: 0px;
+
+    slider_used:= Slider {
+      row: 0;
+      col: 0;
+      rowspan: 2;
+      enabled: enabled;
+      orientation: vertical;
+      value: maximum - value;
+      step: step;
+      minimum: minimum;
+      maximum: maximum;
+
+      changed => {
+        has-focus = self.has-focus;
+
+        if (!use-float) {
+          value-int = maximum - self.value;
+          value = value-int;
+        }
+        else { value = self.value; }
+
+        slider_mask.value = value;
+        slider_text.text = value;
+      }
+    }
+
+    slider_mask := Slider {
+      row: 0;
+      col: 0;
+      rowspan: 2;
+      z: -1; // Ensure slider_used is on top.
+      enabled: enabled;
+      orientation: vertical;
+      transform-rotation: 180deg;
+      value: value;
+      step: step;
+      minimum: minimum;
+      maximum: maximum;
+    }
+
+    Text {
+      row: 0;
+      col: 1;
+      text: title;
+    }
+
+    slider_text := TextEdit {
+      row: 1;
+      col: 1;
+      wrap: no-wrap;
+      enabled: text-enabled;
+      read-only: text-read-only;
+      text: value;
+      edited(text) => {
+        text-has-focus = has-focus;
+        value = text.to-float();
+
+        if (!use-float) {
+          value-int = value;
+          value = value-int;
+        }
+
+        if (value > maximum) {
+          value = maximum;
+          self.text = value;
+        }
+        else if (value < minimum) { 
+          value = minimum;
+          self.text = value;
+        }
+        else if (text == "-") { value = minimum; } // Allow negative values in-case minimum is < 0.
+        else if (value == 0) { self.text = 0; }
+
+        slider_used.value = maximum - value;
+        slider_mask.value = value;
+      }
+    }
+  }
+}
