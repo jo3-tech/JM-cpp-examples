@@ -1,0 +1,100 @@
+import { GridBox, Button } from "std-widgets.slint";
+
+export component DPad {
+
+  in-out property <image> up-icon: @image-url("");  
+  in-out property <bool> up-checkable: false;
+  in-out property <bool> up-checked: false;
+  in-out property <bool> up-enabled: true;
+  in-out property <bool> up-has-focus: false;
+  //in-out property <length> up-icon-size: 0px;
+  in-out property <bool> up-pressed: false;
+  in-out property <bool> up-primary: false;
+  in-out property <bool> up-colorize-icon: false;
+
+  in-out property <image> left-icon: @image-url("");
+  in-out property <bool> left-checkable: false;
+  in-out property <bool> left-checked: false;
+  in-out property <bool> left-enabled: true;
+  in-out property <bool> left-has-focus: false;
+  //in-out property <length> left-icon-size: 0px;
+  in-out property <bool> left-pressed: false;
+  in-out property <bool> left-primary: false;
+  in-out property <bool> left-colorize-icon: false;
+
+  in-out property <image> right-icon: @image-url("");  
+  in-out property <bool> right-checkable: false;
+  in-out property <bool> right-checked: false;
+  in-out property <bool> right-enabled: true;
+  in-out property <bool> right-has-focus: false;
+  //in-out property <length> right-icon-size: 0px;
+  in-out property <bool> right-pressed: false;
+  in-out property <bool> right-primary: false;
+  in-out property <bool> right-colorize-icon: false;
+
+  in-out property <image> down-icon: @image-url("");
+  in-out property <bool> down-checkable: false;
+  in-out property <bool> down-checked: false;
+  in-out property <bool> down-enabled: true;
+  in-out property <bool> down-has-focus: false;
+  //in-out property <length> down-icon-size: 0px;
+  in-out property <bool> down-pressed: false;
+  in-out property <bool> down-primary: false;
+  in-out property <bool> down-colorize-icon: false;
+
+  GridBox {
+    padding: 0px;    
+
+    // Up arrow
+    Button {
+      row: 0;
+      col: 1;
+      icon: up-icon;
+      checkable: up-checkable;
+      checked: up-checked;
+      enabled: up-enabled;
+      //icon-size: up-icon-size; 
+      primary: up-primary;
+      colorize-icon: up-colorize-icon;
+    }
+
+    // Left arrow
+    Button {
+      row: 1;
+      col: 0;
+      icon: left-icon;
+      checkable: left-checkable;
+      checked: left-checked;
+      enabled: left-enabled;
+      //icon-size: left-icon-size; 
+      primary: left-primary;
+      colorize-icon: left-colorize-icon;
+    }
+
+    // Right arrow
+    Button {
+      row: 1;
+      col: 2;
+      icon: right-icon;
+      checkable: right-checkable;
+      checked: right-checked;
+      enabled: right-enabled;
+      //icon-size: right-icon-size; 
+      primary: right-primary;
+      colorize-icon: right-colorize-icon;
+    }
+
+    // Down arrow
+    Button {
+      row: 2;
+      col: 1;
+      icon: down-icon;
+      checkable: down-checkable;
+      checked: down-checked;
+      enabled: down-enabled;
+      //icon-size: down-icon-size; 
+      primary: down-primary;
+      colorize-icon: down-colorize-icon;
+    }
+  }
+}
