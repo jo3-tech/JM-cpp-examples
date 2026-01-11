@@ -18,8 +18,6 @@ export component HorizontalSlider {
   in-out property<bool> text-has-focus: false;
 
   GridBox {
-    out property<int> value-int: value;
-
     padding: 0px;
 
     Text {
@@ -40,7 +38,7 @@ export component HorizontalSlider {
         value = text.to-float();
 
         if (!use-float) {
-          value-int = value;
+          let value-int:int = value;
           value = value-int;
         }
 
@@ -74,7 +72,7 @@ export component HorizontalSlider {
         has-focus = self.has-focus;
 
         if (!use-float) {
-          value-int = self.value;
+          let value-int:int = self.value;
           value = value-int;
         }
         else { value = self.value; }
