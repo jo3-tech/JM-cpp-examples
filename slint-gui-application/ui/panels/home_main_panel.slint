@@ -1,7 +1,7 @@
 import { GridBox, Button } from "std-widgets.slint";
 import { Layout } from "../layout.slint";
 import { Theme } from "../theme.slint";
-import { Separator, VerticalSlider, HorizontalSlider } from "../primitives.slint";
+import { Separator, VerticalSlider, HorizontalSlider, DPad } from "../primitives.slint";
 
 export component HomeMainPanel {
 
@@ -48,7 +48,7 @@ export component HomeMainPanel {
 
           Separator { 
             row: 1; 
-            col: 0; 
+            col: 0;
           }
 
           Button {
@@ -75,11 +75,30 @@ export component HomeMainPanel {
             row: 0;
             col: 3;
           }
+
+          DPad {
+            up-icon: @image-url("../images/up-icon.png");
+            left-icon: @image-url("../images/left-icon.png");
+            right-icon: @image-url("../images/right-icon.png");
+            down-icon: @image-url("../images/down-icon.png");
+            row: 0;
+            col: 4;
+            rowspan: 3;
+            up-colorize-icon: true;
+            left-colorize-icon: true;
+            right-colorize-icon: true;
+            down-colorize-icon: true;
+          }
+
+          Separator {
+            row: 0;
+            col: 5;
+          }          
           
           HorizontalSlider {
             title: "Slider 2     ";
             row: 0;
-            col: 4;
+            col: 6;
             rowspan: 3;
             value: 60;            
           }
