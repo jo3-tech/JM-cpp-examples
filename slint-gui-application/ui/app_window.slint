@@ -1,10 +1,16 @@
 //import { Button, VerticalBox } from "std-widgets.slint";
+import { Version } from "version.slint";
 import { Layout } from "layout.slint";
 import { Theme } from "theme.slint";
 import { HomeMainPanel, HomeIconPanel } from "components.slint";
 
 export component AppWindow inherits Window {
-  title: "Slint GUI Application";
+  title: Version.name;
+
+  default-font-size: Theme.default_font_size;
+
+  preferred-width: Theme.preferred_window_width;
+  preferred-height: Theme.preferred_window_height;
 
   MenuBar {
     Menu {
@@ -23,11 +29,6 @@ export component AppWindow inherits Window {
 
   callback file-new();
   callback file-open();
-
-  preferred-width: 960px;
-  preferred-height: 540px;
-
-  default-font-size: 20px;
 
   GridLayout {
     padding: Layout.window_padding;
