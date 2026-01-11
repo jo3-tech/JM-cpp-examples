@@ -1,9 +1,10 @@
-import { Button, VerticalBox, HorizontalBox, GridBox } from "std-widgets.slint";
+import { GridBox, Button } from "std-widgets.slint";
 import { Layout } from "../layout.slint";
 import { Theme } from "../theme.slint";
-import { Separator } from "../primitives.slint";
+import { Separator, VerticalSlider, HorizontalSlider } from "../primitives.slint";
 
 export component HomeMainPanel {
+
   Rectangle {
     border-radius: Theme.panel_border_radius;
     background: Theme.panel_background;
@@ -11,6 +12,7 @@ export component HomeMainPanel {
     VerticalLayout {
       padding: Layout.panel_padding;
       
+      // Button 1 and Button 2.
       GridBox {
         Row { // 0
           Button { // col 0
@@ -31,26 +33,62 @@ export component HomeMainPanel {
             col: 2;
           }
         }
-        Row { Separator {} }
       }
+      
+      Separator {}
 
+      // Button 3, Button 4, and Slider 1.
       GridBox {
           Button {
             text: "Button 3";
             row: 0;
             col: 0;
+            checkable: true;
           }
+
           Separator { 
             row: 1; 
             col: 0; 
           }
+
           Button {
             text: "Button 4";
             row: 2;
             col: 0;
+            checkable: true;
           }
-          Separator { row: 0; col: 1; }
+
+          Separator { 
+            row: 0; 
+            col: 1; 
+          }
+
+          VerticalSlider {
+            title: "Slider 1";
+            row: 0;
+            col: 2;
+            rowspan: 3;
+            value: 60;
+          }
+
+          Separator {
+            row: 0;
+            col: 3;
+          }
+          
+          HorizontalSlider {
+            title: "Slider 2     ";
+            row: 0;
+            col: 4;
+            rowspan: 3;
+            value: 60;            
+          }
+          
+          Separator { row: 0; col: 10; }
+          
       }
+
+      Separator {}
   }
 /*
     in-out property<int> counter: 42;
