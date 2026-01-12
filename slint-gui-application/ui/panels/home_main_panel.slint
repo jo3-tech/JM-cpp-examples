@@ -4,7 +4,6 @@ import { Theme } from "../theme.slint";
 import { Separator, VerticalSlider, HorizontalSlider, DPad } from "../primitives.slint";
 
 export component HomeMainPanel {
-
   Rectangle {
     border-radius: Theme.panel_border_radius;
     background: Theme.panel_background;
@@ -105,10 +104,10 @@ export component HomeMainPanel {
           
           Separator { row: 0; col: 10; }
           
-      }
+      } // Gridbox
 
       Separator {}
-  }
+    } // VerticalLayout
 /*
     in-out property<int> counter: 42;
     callback request-increase-value();    
@@ -124,5 +123,5 @@ export component HomeMainPanel {
       }
     }
 */  
-  }
+  } // Rectangle
 }

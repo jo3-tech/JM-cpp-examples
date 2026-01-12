@@ -10,6 +10,7 @@ export component HomeIconPanel {
 
     GridLayout {
       padding: Layout.panel_padding;
+
       Image {
         source: @image-url("../images/cogs.png");
         row: 0;
@@ -22,6 +23,7 @@ export component HomeIconPanel {
         //image-fit: fill;
         colorize: Colors.goldenrod;
       }
+
       Image {
         source: @image-url("../images/cloud.png");
         row: 1;
@@ -34,6 +36,6 @@ export component HomeIconPanel {
         //image-fit: fill;
         colorize: skyblue;
       }      
-    }
-  }
+    } // GridLayout
+  }// Rectangle
 }
