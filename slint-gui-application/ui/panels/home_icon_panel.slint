@@ -16,10 +16,10 @@ export component HomeIconPanel {
         row: 0;
         col: 0;
         vertical-alignment: ImageVerticalAlignment.top;
+        min-width: self.source.width * image_scale;
+        min-height: self.source.height * image_scale;
         preferred-width: self.source.width * image_scale;
         preferred-height: self.source.height * image_scale;
-        max-width: self.source.width * 1px;
-        max-height: self.source.height * 1px;
         //image-fit: fill;
         colorize: Colors.goldenrod;
       }
@@ -29,10 +29,10 @@ export component HomeIconPanel {
         row: 1;
         col: 2;
         vertical-alignment: ImageVerticalAlignment.bottom;
+        min-width: self.source.width * image_scale;
+        min-height: self.source.height * image_scale;
         preferred-width: self.source.width * image_scale;
         preferred-height: self.source.height * image_scale;
-        max-width: self.source.width * 1px;
-        max-height: self.source.height * 1px;
         //image-fit: fill;
         colorize: skyblue;
       }      
