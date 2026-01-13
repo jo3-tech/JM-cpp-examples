@@ -1,0 +1,20 @@
+import { Layout } from "../layout.slint";
+import { HomeMainTabs } from "../tabs/tabs.slint";
+import { HomeIconPanel } from "../panels/panels.slint";
+
+export component HomePage {
+  GridLayout {
+    padding: Layout.window_padding;
+    spacing: Layout.panel_spacing;    
+    
+    HomeMainTabs {
+      row: 0;
+      col: 0;
+    }
+
+    HomeIconPanel {
+      row: 1;
+      col: 0;
+    }
+  }
+}
