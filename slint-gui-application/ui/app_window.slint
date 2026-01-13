@@ -2,8 +2,7 @@
 import { Version } from "version.slint";
 import { Layout } from "layout.slint";
 import { Theme } from "theme.slint";
-import { HomeMainPanel, HomeIconPanel } from "panels/panels.slint";
-import { HomeMainTabs } from "tabs/tabs.slint";
+import { HomePage } from "pages/home_page.slint";
 
 export component AppWindow inherits Window {
   title: Version.name;
@@ -31,37 +30,8 @@ export component AppWindow inherits Window {
   callback file-new();
   callback file-open();
 
-  GridLayout {
-    padding: Layout.window_padding;
-    spacing: Layout.panel_spacing;
-    
-    HomeMainTabs {
-      row: 0;
-      col: 0;
-    }
-/*    HomeMainPanel {
-      row: 0;
-      col: 0;
-    }*/
-    HomeIconPanel {
-      row: 1;
-      col: 0;
-    }
+  HomePage {
+    width: 100%;
+    height: 100%;
   }
-
-/*  
-  in-out property<int> counter: 42;
-  callback request-increase-value();    
-  VerticalBox {
-    Text {
-      text: "Counter: \{root.counter}";
-    }
-    Button {
-      text: "Increase value";
-      clicked => {
-        root.request-increase-value();
-      }
-    }
-  }
-*/
 }
