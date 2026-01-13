@@ -1,0 +1,19 @@
+import { TabWidget } from "std-widgets.slint";
+import { HomeMainPanel } from "../panels/panels.slint";
+
+export component HomeMainTabs {
+  TabWidget {
+    Tab {
+      title: "Tab 1";
+      // Tabs don't propagate implicit size; it must be obtained manually.
+      min-width: home_main_panel.preferred-width;
+      min-height: home_main_panel.preferred-height;
+      home_main_panel := HomeMainPanel {}
+    }
+    
+    Tab {
+      title: "Tab 2";
+      Rectangle { background: Colors.steelblue; }
+    }
+  }
+}
