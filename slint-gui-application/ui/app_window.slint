@@ -3,6 +3,7 @@ import { Version } from "version.slint";
 import { Layout } from "layout.slint";
 import { Theme } from "theme.slint";
 import { HomeMainPanel, HomeIconPanel } from "panels/panels.slint";
+import { HomeMainTabs } from "tabs/tabs.slint";
 
 export component AppWindow inherits Window {
   title: Version.name;
@@ -33,10 +34,15 @@ export component AppWindow inherits Window {
   GridLayout {
     padding: Layout.window_padding;
     spacing: Layout.panel_spacing;
-    HomeMainPanel {
+    
+    HomeMainTabs {
       row: 0;
       col: 0;
     }
+/*    HomeMainPanel {
+      row: 0;
+      col: 0;
+    }*/
     HomeIconPanel {
       row: 1;
       col: 0;
