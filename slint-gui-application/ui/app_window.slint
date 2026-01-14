@@ -2,7 +2,7 @@
 import { Version } from "version.slint";
 import { Layout } from "layout.slint";
 import { Theme } from "theme.slint";
-import { HomePage } from "pages/home_page.slint";
+import { HomePage, SplashPage } from "pages/pages.slint";
 
 export component AppWindow inherits Window {
   title: Version.name;
@@ -30,8 +30,23 @@ export component AppWindow inherits Window {
   callback file-new();
   callback file-open();
 
-  HomePage {
-    width: 100%;
-    height: 100%;
+  property <bool> show_splash_page: true;
+  property <duration> splash_time: 3s; 
+  
+  Timer {
+      interval: splash_time;
+      running: true;
+      triggered() => {
+          show_splash_page = false;
+          self.running = false;
+      }
   }
+
+  if (show_splash_page): SplashPage {}
+  
+  if (!show_splash_page): 
+    HomePage {
+      width: 100%;
+      height: 100%;
+    }
 }
