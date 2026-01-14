@@ -1,58 +1,56 @@
-//import { Button, VerticalBox } from "std-widgets.slint";
 import { Version } from "version.slint";
-import { Layout } from "layout.slint";
 import { Theme } from "theme.slint";
+import { Layout } from "layout.slint";
+import { Configuration } from "configuration.slint";
 import { Page } from "navigation/navigation.slint";
 import { HomePage, SplashPage } from "pages/pages.slint";
 
 export component AppWindow inherits Window {
+  property<Page> page: Page.Splash;
+
   title: Version.name;
 
   default-font-size: Theme.default_font_size;
 
-  preferred-width: Theme.preferred_window_width;
-  preferred-height: Theme.preferred_window_height;
-
-  property<Page> page: Page.Splash;
-  property <duration> splash_time: 3s; 
-
+  preferred-width: Layout.preferred_window_width;
+  preferred-height: Layout.preferred_window_height;
+  
   callback file-new();
   callback file-open();
   
   Timer {
-      interval: splash_time;
-      running: true;
-      triggered() => {
-          page = Page.Home;
-          self.running = false;
-      }
+    interval: Configuration.splash_page_duration;
+    running: true;
+    triggered() => {
+        page = Page.Home;
+        self.running = false;
+    }
   }
 
   if (page != Page.Splash):
-    MenuBar {
-      Menu {
-        title: @tr("File");
-        MenuItem {
-          title: @tr("New");
-          activated => { file-new();}
-        }
-        //MenuSeparator {}
-        MenuItem {
-          title: @tr("Open");
-          activated => { file-open(); }
-        }
+  MenuBar {
+    Menu {
+      title: @tr("File");
+      MenuItem {
+        title: @tr("New");
+        activated => { file-new();}
+      }
+      //MenuSeparator {}
+      MenuItem {
+        title: @tr("Open");
+        activated => { file-open(); }
       }
     }
+  }
 
-  if (page == Page.Splash): 
-    SplashPage { 
-      width: 100%;
-      height: 100%; 
-    }
-  
-  if (page == Page.Home): 
+  VerticalLayout { // Required to maintain implicit size.
+    if (page == Page.Splash): 
+    SplashPage {}
+
+    if (page == Page.Home): 
     HomePage {
-      width: 100%;
-      height: 100%;
+      //width: 100%;
+      //height: 100%;
     }
+  }
 }
