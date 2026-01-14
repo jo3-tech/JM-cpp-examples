@@ -4,123 +4,128 @@ import { Theme } from "../theme.slint";
 import { Separator } from "../primitives/primitives.slint";
 import { VerticalSlider, HorizontalSlider, DPad } from "../controls/controls.slint";
 
-export component HomeMainPanel inherits Rectangle { // Must inherit Rectangle to allow expansion into TabWidget Tab.
-  border-radius: Theme.panel_border_radius;
-  background: Theme.panel_background;
+export component HomeMainPanel {
+  width: 100%;
+  height: 100%;
 
-  VerticalLayout {
-    padding: Layout.panel_padding;
-    
-    // Button 1 and Button 2.
-    GridBox {
-      Row { // 0
-        Button { // col 0
-          text: "Button 1";
+  Rectangle {
+    border-radius: Theme.panel_border_radius;
+    background: Theme.panel_background;
+
+    VerticalLayout {
+      padding: Layout.panel_padding;
+      
+      // Button 1 and Button 2.
+      GridBox {
+        Row { // 0
+          Button { // col 0
+            text: "Button 1";
+          }
+          Separator {} // col 1
+          Button { // col 2
+            text: "Button 2";
+          }
+          Separator { col: 10; }
         }
-        Separator {} // col 1
-        Button { // col 2
-          text: "Button 2";
+        Row { // 1
+          Text { //col 0
+            text: "Click to do \nsomething";
+          }
+          Text {
+            text: "Click to do \nsomething";
+            col: 2;
+          }
         }
-        Separator { col: 10; }
       }
-      Row { // 1
-        Text { //col 0
-          text: "Click to do \nsomething";
-        }
-        Text {
-          text: "Click to do \nsomething";
-          col: 2;
+      
+      Separator {}
+
+      // Button 3, Button 4, and Slider 1.
+      GridBox {
+          Button {
+            text: "Button 3";
+            row: 0;
+            col: 0;
+            checkable: true;
+          }
+
+          Separator { 
+            row: 1; 
+            col: 0;
+          }
+
+          Button {
+            text: "Button 4";
+            row: 2;
+            col: 0;
+            checkable: true;
+          }
+
+          Separator { 
+            row: 0; 
+            col: 1; 
+          }
+
+          VerticalSlider {
+            title: "Slider 1";
+            row: 0;
+            col: 2;
+            rowspan: 3;
+            value: 60;
+          }
+
+          Separator {
+            row: 0;
+            col: 3;
+          }
+
+          DPad {
+            up-icon: @image-url("../images/up-icon.png");
+            left-icon: @image-url("../images/left-icon.png");
+            right-icon: @image-url("../images/right-icon.png");
+            down-icon: @image-url("../images/down-icon.png");
+            row: 0;
+            col: 4;
+            rowspan: 3;
+            up-colorize-icon: true;
+            left-colorize-icon: true;
+            right-colorize-icon: true;
+            down-colorize-icon: true;
+          }
+
+          Separator {
+            row: 0;
+            col: 5;
+          }          
+          
+          HorizontalSlider {
+            title: "Slider 2     ";
+            row: 0;
+            col: 6;
+            rowspan: 3;
+            value: 60;            
+          }
+          
+          Separator { row: 0; col: 10; }
+          
+      } // Gridbox
+
+      Separator {}
+    } // VerticalLayout
+  /*
+    in-out property<int> counter: 42;
+    callback request-increase-value();    
+    VerticalBox {
+      Text {
+        text: "Counter: \{counter}";
+      }
+      Button {
+        text: "Increase value";
+        clicked => {
+          request-increase-value();
         }
       }
     }
-    
-    Separator {}
-
-    // Button 3, Button 4, and Slider 1.
-    GridBox {
-        Button {
-          text: "Button 3";
-          row: 0;
-          col: 0;
-          checkable: true;
-        }
-
-        Separator { 
-          row: 1; 
-          col: 0;
-        }
-
-        Button {
-          text: "Button 4";
-          row: 2;
-          col: 0;
-          checkable: true;
-        }
-
-        Separator { 
-          row: 0; 
-          col: 1; 
-        }
-
-        VerticalSlider {
-          title: "Slider 1";
-          row: 0;
-          col: 2;
-          rowspan: 3;
-          value: 60;
-        }
-
-        Separator {
-          row: 0;
-          col: 3;
-        }
-
-        DPad {
-          up-icon: @image-url("../images/up-icon.png");
-          left-icon: @image-url("../images/left-icon.png");
-          right-icon: @image-url("../images/right-icon.png");
-          down-icon: @image-url("../images/down-icon.png");
-          row: 0;
-          col: 4;
-          rowspan: 3;
-          up-colorize-icon: true;
-          left-colorize-icon: true;
-          right-colorize-icon: true;
-          down-colorize-icon: true;
-        }
-
-        Separator {
-          row: 0;
-          col: 5;
-        }          
-        
-        HorizontalSlider {
-          title: "Slider 2     ";
-          row: 0;
-          col: 6;
-          rowspan: 3;
-          value: 60;            
-        }
-        
-        Separator { row: 0; col: 10; }
-        
-    } // Gridbox
-
-    Separator {}
-  } // VerticalLayout
-/*
-  in-out property<int> counter: 42;
-  callback request-increase-value();    
-  VerticalBox {
-    Text {
-      text: "Counter: \{counter}";
-    }
-    Button {
-      text: "Increase value";
-      clicked => {
-        request-increase-value();
-      }
-    }
+  */
   }
-*/
 }
