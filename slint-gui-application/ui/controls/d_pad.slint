@@ -5,7 +5,7 @@ export component DPad {
   in-out property <bool> up-checkable: false;
   in-out property <bool> up-checked: false;
   in-out property <bool> up-enabled: true;
-  in-out property <bool> up-has-focus: false;
+  out property <bool> up-has-focus <=> up.has-focus;
   //in-out property <length> up-icon-size: 0px;
   in-out property <bool> up-pressed: false;
   in-out property <bool> up-primary: false;
@@ -15,7 +15,7 @@ export component DPad {
   in-out property <bool> left-checkable: false;
   in-out property <bool> left-checked: false;
   in-out property <bool> left-enabled: true;
-  in-out property <bool> left-has-focus: false;
+  out property <bool> left-has-focus <=> left.has-focus;
   //in-out property <length> left-icon-size: 0px;
   in-out property <bool> left-pressed: false;
   in-out property <bool> left-primary: false;
@@ -25,7 +25,7 @@ export component DPad {
   in-out property <bool> right-checkable: false;
   in-out property <bool> right-checked: false;
   in-out property <bool> right-enabled: true;
-  in-out property <bool> right-has-focus: false;
+  out property <bool> right-has-focus <=> right.has-focus;
   //in-out property <length> right-icon-size: 0px;
   in-out property <bool> right-pressed: false;
   in-out property <bool> right-primary: false;
@@ -35,7 +35,7 @@ export component DPad {
   in-out property <bool> down-checkable: false;
   in-out property <bool> down-checked: false;
   in-out property <bool> down-enabled: true;
-  in-out property <bool> down-has-focus: false;
+  out property <bool> down-has-focus <=> down.has-focus;
   //in-out property <length> down-icon-size: 0px;
   in-out property <bool> down-pressed: false;
   in-out property <bool> down-primary: false;
@@ -44,8 +44,7 @@ export component DPad {
   GridBox {
     padding: 0px;    
 
-    // Up arrow
-    Button {
+    up := Button {
       row: 0;
       col: 1;
       icon: up-icon;
@@ -57,8 +56,7 @@ export component DPad {
       colorize-icon: up-colorize-icon;
     }
 
-    // Left arrow
-    Button {
+    left := Button {
       row: 1;
       col: 0;
       icon: left-icon;
@@ -70,8 +68,7 @@ export component DPad {
       colorize-icon: left-colorize-icon;
     }
 
-    // Right arrow
-    Button {
+    right := Button {
       row: 1;
       col: 2;
       icon: right-icon;
@@ -83,8 +80,7 @@ export component DPad {
       colorize-icon: right-colorize-icon;
     }
 
-    // Down arrow
-    Button {
+    down := Button {
       row: 2;
       col: 1;
       icon: down-icon;
