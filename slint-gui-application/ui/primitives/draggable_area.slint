@@ -1,0 +1,18 @@
+export component DraggableArea inherits Rectangle {
+  callback clicked();
+
+  TouchArea {
+    moved => {
+      //debug("Pressed at x:", self.pressed-x,", y:", self.pressed-y);
+      //debug("Mouse at x:", self.mouse-x,", y:", self.mouse-y);
+      if (self.pressed) {
+        let delta-x:length = self.mouse-x - self.pressed-x;
+        let delta-y:length = self.mouse-y - self.pressed-y;
+        root.x = root.x + delta-x;
+        root.y = root.y + delta-y;
+      }
+    }
+
+    clicked() => { clicked(); }
+  }
+}

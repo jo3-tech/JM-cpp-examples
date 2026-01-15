@@ -1,0 +1,31 @@
+import { AboutPopup } from "index.slint";
+
+component AboutPopup {
+  callback close();
+  visible: false;
+  close() => { self.visible = false; }
+  AboutPopup { clicked => { root.close(); } }
+}
+
+export component MainMenuBar inherits Window {
+  callback github();
+  about_popup := AboutPopup {}
+
+  MenuBar {
+    Menu {
+      title: @tr("Help");
+      
+      MenuItem {
+        title: @tr("About");
+        activated => { about_popup.visible = true; }
+      }
+
+      //MenuSeparator {}
+      
+      MenuItem {
+        title: @tr("GitHub");
+        activated => { github(); }
+      }
+    }
+  }
+}

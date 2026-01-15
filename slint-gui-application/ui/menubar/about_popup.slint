@@ -1,0 +1,41 @@
+import { Button } from "std-widgets.slint";
+import { Version } from "../version.slint";
+import { Theme } from "../theme.slint";
+import { Layout } from "../layout.slint";
+import { DraggableArea } from "../primitives/primitives.slint";
+import { Separator } from "../primitives/primitives.slint";
+
+export component AboutPopup {
+  callback clicked();
+
+  DraggableArea {
+    Rectangle {
+      border-radius: Theme.panel_border_radius;
+      background: black;
+
+      VerticalLayout {
+        Rectangle {
+          border-top-left-radius: Theme.panel_border_radius;
+          border-top-right-radius: Theme.panel_border_radius;
+          background: Colors.skyblue;
+
+          Text { text: "  About This Application  "; }
+        }
+
+        Separator { height: 5px; }
+
+        Text {
+          text: "\{Version.name}\nVersion \{Version.major}.\{Version.minor}.\{Version.patch}";
+          horizontal-alignment: center;
+        }
+
+        Separator { height: 10px; }
+        
+        Button {
+          text: "Close";
+          clicked() => { root.clicked(); }
+        }
+      }
+    }
+  }
+}
