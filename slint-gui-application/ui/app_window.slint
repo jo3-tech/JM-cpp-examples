@@ -4,6 +4,7 @@ import { Layout } from "layout.slint";
 import { Configuration } from "configuration.slint";
 import { Page } from "navigation/navigation.slint";
 import { HomePage, SplashPage } from "pages/pages.slint";
+import { AboutPopupPanel } from "panels/panels.slint";
 
 export component AppWindow inherits Window {
   property<Page> page: Page.Splash;
@@ -15,8 +16,10 @@ export component AppWindow inherits Window {
   preferred-width: Layout.preferred_window_width;
   preferred-height: Layout.preferred_window_height;
   
-  callback file-new();
-  callback file-open();
+  callback about-popup();
+  about-popup => { about_popup.show(); }
+
+  callback open-github();
   
   Timer {
     interval: Configuration.splash_page_duration;
@@ -27,18 +30,26 @@ export component AppWindow inherits Window {
     }
   }
 
+  about_popup := PopupWindow {
+    x: root.width / 2 - self.width / 2;
+    y: root.height / 2 - self.height / 2;
+    close-policy: close-on-click-outside;
+
+    AboutPopupPanel {}
+  }
+
   if (page != Page.Splash):
   MenuBar {
     Menu {
-      title: @tr("File");
+      title: @tr("Help");
       MenuItem {
-        title: @tr("New");
-        activated => { file-new();}
+        title: @tr("About");
+        activated => { about_popup.show(); }
       }
       //MenuSeparator {}
       MenuItem {
-        title: @tr("Open");
-        activated => { file-open(); }
+        title: @tr("GitHub");
+        activated => { open-github(); }
       }
     }
   }
