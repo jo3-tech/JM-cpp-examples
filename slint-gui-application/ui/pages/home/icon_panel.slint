@@ -1,7 +1,7 @@
-import { Layout } from "../layout.slint";
-import { Theme } from "../theme.slint";
+import { Layout } from "../../layout.slint";
+import { Theme } from "../../theme.slint";
 
-export component HomeIconPanel {
+export component IconPanel {
   Rectangle {
     border-radius: Theme.panel_border_radius;
     background: Theme.panel_background;
@@ -12,7 +12,7 @@ export component HomeIconPanel {
       padding: Layout.panel_padding;
 
       Image {
-        source: @image-url("../images/cogs.png");
+        source: @image-url("../../images/cogs.png");
         row: 0;
         col: 0;
         vertical-alignment: ImageVerticalAlignment.top;
@@ -25,7 +25,7 @@ export component HomeIconPanel {
       }
 
       Image {
-        source: @image-url("../images/cloud.png");
+        source: @image-url("../../images/cloud.png");
         row: 1;
         col: 2;
         vertical-alignment: ImageVerticalAlignment.bottom;

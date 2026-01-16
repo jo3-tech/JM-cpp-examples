@@ -71,6 +71,7 @@ export component VerticalSlider {
       enabled: text-enabled;
       read-only: text-read-only;
       text: value;
+      
       edited(text) => {
         if (!text.is-float()) { return; }
 

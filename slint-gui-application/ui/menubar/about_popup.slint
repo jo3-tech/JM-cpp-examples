@@ -2,8 +2,7 @@ import { Button } from "std-widgets.slint";
 import { Version } from "../version.slint";
 import { Theme } from "../theme.slint";
 import { Layout } from "../layout.slint";
-import { DraggableArea } from "../primitives/primitives.slint";
-import { Separator } from "../primitives/primitives.slint";
+import { DraggableArea, Separator } from "../primitives/index.slint";
 
 export component AboutPopup {
   callback clicked();
@@ -33,6 +32,7 @@ export component AboutPopup {
         
         Button {
           text: "Close";
+          
           clicked() => { root.clicked(); }
         }
       }
