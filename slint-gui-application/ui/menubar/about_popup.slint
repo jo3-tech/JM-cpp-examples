@@ -5,7 +5,10 @@ import { Layout } from "../layout.slint";
 import { DraggableArea, Separator } from "../primitives/index.slint";
 
 export component AboutPopup {
-  callback clicked();
+  visible: false;
+
+  callback show();
+  show() => { self.visible = true; }
 
   DraggableArea {
     Rectangle {
@@ -33,7 +36,7 @@ export component AboutPopup {
         Button {
           text: "Close";
           
-          clicked() => { root.clicked(); }
+          clicked() => { root.visible = false; }
         }
       }
     }

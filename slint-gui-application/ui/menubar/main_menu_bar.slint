@@ -1,18 +1,8 @@
 import { AboutPopup } from "index.slint";
 
-component AboutPopup {
-  callback close();
-  close() => { self.visible = false; }
-
-  y: 100px;
-  visible: false;
-  
-  AboutPopup { clicked => { root.close(); } }
-}
-
 export component MainMenuBar inherits Window {
   callback github();
-  about_popup := AboutPopup {}
+  about_popup := AboutPopup { y: 100px; }
 
   MenuBar {
     Menu {
@@ -20,7 +10,7 @@ export component MainMenuBar inherits Window {
       
       MenuItem {
         title: @tr("About");
-        activated => { about_popup.visible = true; }
+        activated => { about_popup.show(); }
       }
 
       //MenuSeparator {}
