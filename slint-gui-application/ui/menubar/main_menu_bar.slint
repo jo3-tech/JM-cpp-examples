@@ -2,8 +2,11 @@ import { AboutPopup } from "index.slint";
 
 component AboutPopup {
   callback close();
-  visible: false;
   close() => { self.visible = false; }
+
+  y: 100px;
+  visible: false;
+  
   AboutPopup { clicked => { root.close(); } }
 }
 
