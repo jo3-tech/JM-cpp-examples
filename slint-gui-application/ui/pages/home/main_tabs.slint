@@ -1,19 +1,31 @@
 import { TabWidget } from "std-widgets.slint";
+import { Theme } from "../../theme.slint";
 import { MainPanel } from "main_panel.slint";
 
-export component MainTabs {
+export component MainTabs inherits Rectangle {
+  border-radius: Theme.panel_border_radius;
+  background: Colors.steelblue;
+
   TabWidget {
     Tab {
       title: "Tab 1";
       // Tabs don't propagate implicit size; it must be obtained manually.
       min-width: home_main_panel.preferred-width;
       min-height: home_main_panel.preferred-height;
+
       home_main_panel := MainPanel {}
     }
     
     Tab {
       title: "Tab 2";
-      Rectangle { background: Colors.steelblue; }
+      
+      Rectangle {
+        border-bottom-left-radius: Theme.panel_border_radius;
+        border-bottom-right-radius: Theme.panel_border_radius;
+        background: Colors.black;
+        
+        Text { text: "Tab 2 content."; }
+      }
     }
   }
 }
