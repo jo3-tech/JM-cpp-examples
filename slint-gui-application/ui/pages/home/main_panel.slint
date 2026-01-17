@@ -19,6 +19,8 @@ export component MainPanel inherits Rectangle {
       Row { // 0
         Button { // col 0
           text: "Button 1";
+
+          clicked => { button-2-count = 0; }
         }
 
         Separator {} // col 1
@@ -42,7 +44,7 @@ export component MainPanel inherits Rectangle {
       }
       Row { // 1
         Text { //col 0
-          text: "Click to do \nsomething";
+          text: "Click to reset\nButton 2 clicks.";
         }
       
         Text {
