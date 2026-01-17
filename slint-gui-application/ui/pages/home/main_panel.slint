@@ -5,6 +5,8 @@ import { Separator } from "../../primitives/index.slint";
 import { VerticalSlider, HorizontalSlider, DPad } from "../../controls/index.slint";
 
 export component MainPanel inherits Rectangle {
+  private property <int> button-2-count: 0;
+
   border-bottom-left-radius: Theme.panel_border_radius;
   border-bottom-right-radius: Theme.panel_border_radius;
   background: Theme.panel_background;
@@ -23,6 +25,8 @@ export component MainPanel inherits Rectangle {
         
         Button { // col 2
           text: "Button 2";
+
+          clicked() => { button-2-count += 1; }
         }
         
         Separator {} // col 1
@@ -42,7 +46,7 @@ export component MainPanel inherits Rectangle {
         }
       
         Text {
-          text: "Click to do \nsomething";
+          text: "No. of clicks: " + button-2-count;
           col: 2;
         }
       }
