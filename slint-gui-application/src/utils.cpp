@@ -5,7 +5,7 @@
 #elif defined(__APPLE__)
   #include <cstdlib>
   #include <TargetConditionals.h>
-#elif define(__linux__)
+#elif defined(__linux__)
   #include <cstdlib>
 #else
   #error "Unsupported platform"
