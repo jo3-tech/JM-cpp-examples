@@ -9,6 +9,11 @@ import { MainMenuBar } from "menubar/main_menu_bar.slint";
 export component AppWindow inherits Window {
   property<Page> page: Page.Splash;
 
+  // Exposed callbacks for backend.
+  // These must be forwarded to the relevant component instances.
+  // MainMenuBar
+  callback open_github(string);
+
   title: Version.name;
 
   default-font-size: Theme.default_font_size;
@@ -27,9 +32,13 @@ export component AppWindow inherits Window {
 
   VerticalLayout { // Required to maintain implicit sizes.
     if (page != Page.Splash):
-    MainMenuBar { z: 1;}
+    MainMenuBar {
+      z: 1;
 
-    if (page == Page.Splash): 
+      open_github(url_output) => { root.open_github(url_output); }
+    }
+
+    if (page == Page.Splash):
     SplashPage {}
 
     if (page == Page.Home): 
