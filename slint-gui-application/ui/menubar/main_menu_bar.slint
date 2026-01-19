@@ -1,7 +1,9 @@
 import { AboutPopup } from "index.slint";
+import { Configuration } from "../configuration.slint";
 
 export component MainMenuBar inherits Window {
-  callback github();
+  callback open_github(string);
+
   about_popup := AboutPopup { y: 100px; }
 
   MenuBar {
@@ -17,7 +19,7 @@ export component MainMenuBar inherits Window {
       
       MenuItem {
         title: @tr("GitHub");
-        activated => { github(); }
+        activated => { root.open_github(Configuration.github_url); }
       }
     }
   }
