@@ -1,0 +1,24 @@
+import { StandardButton } from "std-widgets.slint";
+
+export component GitHubDialogue inherits Dialog {
+  visible: false;
+
+  callback show();
+  show() => { self.visible = true; }
+
+  callback ok_clicked();
+
+  Text { text: "This will open the GitHub page in your browser."; }
+
+  StandardButton {
+    kind: ok;
+
+    clicked() => { root.ok_clicked(); root.visible = false; }
+  }
+
+  StandardButton {
+    kind: cancel;
+
+    clicked() => { root.visible = false; }
+  }
+}
