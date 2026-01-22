@@ -20,6 +20,8 @@ message("Build type: " ${CMAKE_BUILD_TYPE})
 include(FetchContent) # CMake's FetchContent.
 
 # Project dependencies.
+
+# Slint UI framework.
 find_package(Slint QUIET)
 if (NOT Slint_FOUND)
   message("Slint could not be located in the CMake module search path. Downloading it from Git and building it locally")
@@ -34,6 +36,14 @@ if (NOT Slint_FOUND)
   FetchContent_MakeAvailable(Slint)
 endif (NOT Slint_FOUND)
 
+# ASIO library for networking.
+FetchContent_Declare(
+  asio
+  GIT_REPOSITORY https://github.com/chriskohlhoff/asio.git
+  GIT_TAG master
+)
+FetchContent_MakeAvailable(asio)
+
 # Project executable.
 add_executable(${CMAKE_PROJECT_NAME})
 
@@ -46,6 +56,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 # Project include paths.
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
   src/
+  ${asio_SOURCE_DIR}/include
 )
 
 # Project linked libraries.
