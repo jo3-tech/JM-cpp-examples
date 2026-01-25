@@ -1,0 +1,11 @@
+// UI layer/view state (Slint)
+export component ViewState {
+  // Nothing here yet.
+}
+
+// App logic/model state (C++)
+export global ModelState {
+  in property <[string]> serial_ports: ["No devices found"];
+
+  callback open_github(string);
+}
