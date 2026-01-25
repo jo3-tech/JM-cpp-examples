@@ -1,4 +1,6 @@
 import { StandardButton } from "std-widgets.slint";
+import { Configuration } from "../configuration.slint";
+import { ModelState } from "../state.slint";
 
 export component GitHubDialogue inherits Dialog {
   visible: false;
@@ -13,7 +15,9 @@ export component GitHubDialogue inherits Dialog {
   StandardButton {
     kind: ok;
 
-    clicked() => { root.ok_clicked(); root.visible = false; }
+    clicked() => {
+      ModelState.open_github(Configuration.github_url);
+      root.visible = false; }
   }
 
   StandardButton {
