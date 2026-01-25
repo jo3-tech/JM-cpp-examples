@@ -2,17 +2,15 @@ import { Version } from "version.slint";
 import { Theme } from "theme.slint";
 import { Layout } from "layout.slint";
 import { Configuration } from "configuration.slint";
+import { ModelState } from "state.slint";
 import { Page } from "navigation/index.slint";
-import { HomePage, SplashPage } from "pages/index.slint";
 import { MainMenuBar } from "menubar/index.slint";
+import { HomePage, SplashPage } from "pages/index.slint";
+
+export { ModelState }
 
 export component AppWindow inherits Window {
   property<Page> page: Page.Splash;
-
-  // Exposed callbacks for backend.
-  // These must be forwarded to the relevant component instances.
-  // MainMenuBar
-  callback open_github(string);
 
   title: Version.name;
 
@@ -31,17 +29,10 @@ export component AppWindow inherits Window {
   }
 
   VerticalLayout { // Required to maintain implicit sizes.
-    if (page != Page.Splash):
-    MainMenuBar {
-      z: 1;
+    if (page != Page.Splash): MainMenuBar { z: 1; }
 
-      open_github(url_output) => { root.open_github(url_output); }
-    }
+    if (page == Page.Splash): SplashPage {}
 
-    if (page == Page.Splash):
-    SplashPage {}
-
-    if (page == Page.Home): 
-    HomePage {}
+    if (page == Page.Home): HomePage {}
   }
 }

@@ -3,14 +3,10 @@ import { AboutPopup } from "about_popup.slint";
 import { GitHubDialogue } from "github_dialogue.slint";
 
 export component MainMenuBar inherits Window {
-  callback open_github(string);
-
   about_popup := AboutPopup { y: 100px; }
 
   github_dialogue := GitHubDialogue {
     y: 100px;
-    
-    ok_clicked() => { root.open_github(Configuration.github_url); }
   }
 
   MenuBar {
