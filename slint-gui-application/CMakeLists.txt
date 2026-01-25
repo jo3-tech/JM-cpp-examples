@@ -36,13 +36,56 @@ if (NOT Slint_FOUND)
   FetchContent_MakeAvailable(Slint)
 endif (NOT Slint_FOUND)
 
-# ASIO library for networking.
+# wjwwood/serial for serial port communication.
 FetchContent_Declare(
-  asio
+  serial_src
+  GIT_REPOSITORY https://github.com/wjwwood/serial.git
+  GIT_TAG 1.2.1
+)
+
+FetchContent_GetProperties(serial_src)
+if (NOT serial_src_POPULATED)
+  FetchContent_Populate(serial_src)
+endif()
+
+add_library(Serial STATIC
+  ${serial_src_SOURCE_DIR}/src/serial.cc
+  ${serial_src_SOURCE_DIR}/src/impl/unix.cc
+  ${serial_src_SOURCE_DIR}/src/impl/list_ports/list_ports_linux.cc
+  ${serial_src_SOURCE_DIR}/src/impl/list_ports/list_ports_osx.cc
+  ${serial_src_SOURCE_DIR}/src/impl/list_ports/list_ports_win.cc
+)
+
+target_include_directories(Serial PUBLIC
+  ${serial_src_SOURCE_DIR}/include
+)
+
+if (WIN32)
+  add_compile_definitions(_WIN32_WINNT=0x0601) # Windows 7 minimum.
+  target_link_libraries(Serial PRIVATE setupapi)
+endif()
+
+add_library(Serial::Serial ALIAS Serial)
+
+# Asio for networking and asynchronous I/O.
+FetchContent_Declare(
+  asio_src
   GIT_REPOSITORY https://github.com/chriskohlhoff/asio.git
   GIT_TAG master
 )
-FetchContent_MakeAvailable(asio)
+
+FetchContent_GetProperties(asio_src)
+if(NOT asio_src_POPULATED)
+  FetchContent_Populate(asio_src)
+endif()
+
+add_library(Asio INTERFACE)
+
+target_include_directories(Asio INTERFACE
+  ${asio_src_SOURCE_DIR}/include
+)
+
+add_library(Asio::Asio ALIAS Asio)
 
 # Project executable.
 add_executable(${CMAKE_PROJECT_NAME})
@@ -56,12 +99,13 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 # Project include paths.
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
   src/
-  ${asio_SOURCE_DIR}/include
 )
 
 # Project linked libraries.
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE 
   Slint::Slint
+  Serial::Serial
+  Asio::Asio
 )
 
 # Library targets.
@@ -72,9 +116,9 @@ slint_target_sources(${CMAKE_PROJECT_NAME}
 # Custom build targets.
 # On Windows, copy the Slint DLL next to the application binary so that it's found.
 if (WIN32)
-    add_custom_command(TARGET ${CMAKE_PROJECT_NAME}
-      POST_BUILD 
-      COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:slint_gui_application> $<TARGET_FILE_DIR:slint_gui_application> 
-      COMMAND_EXPAND_LISTS
-    )
+  add_custom_command(TARGET ${CMAKE_PROJECT_NAME}
+    POST_BUILD 
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:slint_gui_application> $<TARGET_FILE_DIR:slint_gui_application> 
+    COMMAND_EXPAND_LISTS
+  )
 endif()
