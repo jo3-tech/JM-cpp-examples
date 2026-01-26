@@ -32,18 +32,39 @@ export component MainPanel inherits Rectangle {
           clicked() => { button-2-count += 1; }
         }
         
-        Separator {} // col 1
+        Separator {} // col 3
 
-        ComboBox { // col 2
-          model: ModelState.serial_ports;
-          //model: ["first", "second", "third"];
-          current-index: 0;
+        Button { // col 4
+          text: "Refresh Serial Ports";
+
+          clicked() => { ModelState.refresh_serial_ports(); }
         }
 
-        Text { text: "Dropdown Menu"; }
-        
+        ComboBox { // col 5
+          model: ModelState.serial_ports;
+          //model: ["first", "second", "third"];
+          current-index: ModelState.serial_ports_index;
+        }
+
+        Text { text: "Port"; } // col 6
+
+        ComboBox { // col 7
+          model: ModelState.baud_rates;
+          //model: ["first", "second", "third"];
+          current-index: ModelState.baud_rates_index;
+        }
+
+        Text { text: "Baud"; } // col 8
+
+        Button { // col 9
+          text: "Connect";
+
+          clicked() => { ModelState.connect_serial(); }
+        }
+
         Separator { col: 10; }
       }
+
       Row { // 1
         Text { //col 0
           text: "Click to reset\nButton 2 clicks.";
