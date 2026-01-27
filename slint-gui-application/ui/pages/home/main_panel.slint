@@ -57,7 +57,7 @@ export component MainPanel inherits Rectangle {
         Text { text: "Baud"; } // col 8
 
         Button { // col 9
-          text: "Connect";
+          text: ModelState.serial_connection_info;
 
           clicked() => { ModelState.connect_serial(); }
         }
