@@ -48,13 +48,28 @@ if (NOT serial_src_POPULATED)
   FetchContent_Populate(serial_src)
 endif()
 
-add_library(Serial STATIC
+set(SERIAL_SOURCES
   ${serial_src_SOURCE_DIR}/src/serial.cc
-  ${serial_src_SOURCE_DIR}/src/impl/unix.cc
-  ${serial_src_SOURCE_DIR}/src/impl/list_ports/list_ports_linux.cc
-  ${serial_src_SOURCE_DIR}/src/impl/list_ports/list_ports_osx.cc
-  ${serial_src_SOURCE_DIR}/src/impl/list_ports/list_ports_win.cc
 )
+
+if(WIN32)
+  list(APPEND SERIAL_SOURCES
+      ${serial_src_SOURCE_DIR}/src/impl/win.cc
+      ${serial_src_SOURCE_DIR}/src/impl/list_ports/list_ports_win.cc
+  )
+elseif(APPLE)
+  list(APPEND SERIAL_SOURCES
+    ${serial_src_SOURCE_DIR}/src/impl/unix.cc
+    ${serial_src_SOURCE_DIR}/src/impl/list_ports/list_ports_osx.cc
+  )
+else() # Linux
+  list(APPEND SERIAL_SOURCES
+    ${serial_src_SOURCE_DIR}/src/impl/unix.cc
+    ${serial_src_SOURCE_DIR}/src/impl/list_ports/list_ports_linux.cc
+  )
+endif()
+
+add_library(serial STATIC ${SERIAL_SOURCES})
 
 target_include_directories(Serial PUBLIC
   ${serial_src_SOURCE_DIR}/include
