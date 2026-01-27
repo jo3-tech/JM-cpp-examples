@@ -7,8 +7,9 @@ export component ViewState {
 export global ModelState {
   in property <[string]> serial_ports;
   in property <int> serial_ports_index;
-  in property <[string]> baud_rates: ["9600", "19200", "38400", "57600", "115200"];
+  in property <[string]> baud_rates;
   in property <int> baud_rates_index;
+  in property <string> serial_connection_info;
 
   callback open_github(string);
   callback refresh_serial_ports();
