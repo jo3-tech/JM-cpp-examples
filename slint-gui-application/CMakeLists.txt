@@ -69,7 +69,7 @@ else() # Linux
   )
 endif()
 
-add_library(serial STATIC ${SERIAL_SOURCES})
+add_library(Serial STATIC ${SERIAL_SOURCES})
 
 target_include_directories(Serial PUBLIC
   ${serial_src_SOURCE_DIR}/include
