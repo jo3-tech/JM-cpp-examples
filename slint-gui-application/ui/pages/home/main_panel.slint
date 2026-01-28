@@ -7,6 +7,7 @@ import { VerticalSlider, HorizontalSlider, DPad } from "../../controls/index.sli
 
 export component MainPanel inherits Rectangle {
   private property <int> button-2-count: 0;
+  private property <length> text-font-size: Theme.default_font_size * (3/4);
 
   border-bottom-left-radius: Theme.panel_border_radius;
   border-bottom-right-radius: Theme.panel_border_radius;
@@ -18,29 +19,30 @@ export component MainPanel inherits Rectangle {
     // Button 1 and Button 2.
     GridBox {
       Row { // 0
-        Button { // col 0
+        Button { // Col 0
           text: "Button 1";
 
-          clicked => { button-2-count = 0; }
+          clicked => { root.button-2-count = 0; }
         }
 
-        Separator {} // col 1
+        Separator {} // Col 1
         
-        Button { // col 2
+        Button { // Col 2
           text: "Button 2";
 
-          clicked() => { button-2-count += 1; }
+          clicked() => { root.button-2-count += 1; }
         }
         
-        Separator {} // col 3
+        Separator {} // Col 3
 
-        Button { // col 4
-          text: "Refresh Serial Ports";
+        Button { // Col 4
+          text: "Refresh \nSerial Ports";
+          rowspan: 2;
 
           clicked() => { ModelState.refresh_serial_ports(); }
         }
 
-        ComboBox { // col 5
+        ComboBox { // Col 5
           model: ModelState.serial_ports;
           //model: ["first", "second", "third"];
           current-index: ModelState.serial_ports_index;
@@ -48,9 +50,9 @@ export component MainPanel inherits Rectangle {
           selected(value) => { ModelState.serial_ports_index = self.current-index; }
         }
 
-        Text { text: "Port"; } // col 6
+        Text { text: "Port"; } // Col 6
 
-        ComboBox { // col 7
+        ComboBox { // Col 7
           model: ModelState.baud_rates;
           //model: ["first", "second", "third"];
           current-index: ModelState.baud_rates_index;
@@ -58,58 +60,92 @@ export component MainPanel inherits Rectangle {
           selected() => { ModelState.baud_rates_index = self.current-index; }
         }
 
-        Text { text: "Baud"; } // col 8
+        Text { text: "Baud"; } // Col 8
 
-        Button { // col 9
+        Button { // Col 9
           text: ModelState.serial_connection_info;
 
           clicked() => { ModelState.connect_or_disconnect_serial(); }
         }
 
-        Separator { col: 10; }
-      }
+        Separator { col: 15; }
+      } // Row 0
 
       Row { // 1
-        Text { //col 0
-          text: "Click to reset\nButton 2 clicks.";
+        Text { // Col 0
+          text: "Click to reset \nButton 2 clicks.";
+          font-size: root.text-font-size;
         }
       
-        Text {
+        Text { // Col 1
           text: "No. of clicks: " + button-2-count;
+          font-size: root.text-font-size;
           col: 2;
         }
       }
-    }
+    } // GridBox
     
     Separator {}
 
-    // Button 3, Button 4, and Slider 1.
+    // Button 3, Button 4, Slider 1, D-pad, Slider 2, Send.
     GridBox {
-        Button {
+      // Col 0
+        button_3 := Button {
           text: "Button 3";
           row: 0;
           col: 0;
           checkable: true;
+
+          clicked => {
+            if (self.checked) {
+              button_4.checked = false;
+              ModelState.send_bytes_value = slider_1.value;
+            }
+            else {
+              ModelState.send_bytes_value = 0;
+            }
+          }
         }
 
-        Separator { 
+        Text {
+          text: "Toggle on to Send Slider 1 \nvalue over serial when \n\"Send Bytes\" is clicked\n";
+          font-size: root.text-font-size;
           row: 1; 
           col: 0;
         }
 
-        Button {
+        button_4 := Button {
           text: "Button 4";
           row: 2;
           col: 0;
           checkable: true;
+
+          clicked => {
+            if (self.checked) {
+              button_3.checked = false;
+              ModelState.send_bytes_value = slider_2.value;
+            }
+            else {
+              ModelState.send_bytes_value = 0;
+            }
+          }          
         }
 
+        Text {
+          text: "Toggle on to send Slider 2 \nvalue over serial when \n\"Send Bytes\" is clicked\n";
+          font-size: root.text-font-size;
+          row: 3; 
+          col: 0;
+        }        
+
+      // Col 1
         Separator { 
           row: 0; 
           col: 1; 
         }
 
-        VerticalSlider {
+      // Col 2
+        slider_1 := VerticalSlider {
           title: "Slider 1";
           row: 0;
           col: 2;
@@ -117,11 +153,13 @@ export component MainPanel inherits Rectangle {
           value: 60;
         }
 
+      // Col 3
         Separator {
           row: 0;
           col: 3;
         }
 
+      // Col 4
         DPad {
           up-icon: @image-url("../../images/up-icon.png");
           left-icon: @image-url("../../images/left-icon.png");
@@ -136,19 +174,43 @@ export component MainPanel inherits Rectangle {
           down-colorize-icon: true;
         }
 
+      // Col 5
         Separator {
           row: 0;
           col: 5;
-        }          
-        
-        HorizontalSlider {
+        }
+
+      // Col 6
+        slider_2 := HorizontalSlider {
           title: "Slider 2     ";
           row: 0;
           col: 6;
           rowspan: 3;
-          value: 60;            
+          value: 60;
         }
-        
+
+      // Col 7
+        Separator {
+          row: 0;
+          col: 7;
+        }
+
+      // Col 8
+        Button {
+          text: "Send Bytes \n over Serial";
+          row: 0;
+          col: 8;
+          rowspan: 2;
+        }
+
+        Text {
+          text: "Value to send: " + ModelState.send_bytes_value;
+          font-size: root.text-font-size;
+          horizontal-alignment: center;
+          row: 2;
+          col: 8;
+        }
+
         Separator { row: 0; col: 10; }
         
     } // Gridbox
