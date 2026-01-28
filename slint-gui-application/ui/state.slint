@@ -10,6 +10,7 @@ export global ModelState {
   in property <[string]> baud_rates;
   in property <int> baud_rates_index;
   in property <string> serial_connection_info: "Connect";
+  in property <int> send_bytes_value: 0;
 
   callback open_github(string);
   callback refresh_serial_ports();
