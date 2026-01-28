@@ -44,6 +44,8 @@ export component MainPanel inherits Rectangle {
           model: ModelState.serial_ports;
           //model: ["first", "second", "third"];
           current-index: ModelState.serial_ports_index;
+
+          selected(value) => { ModelState.serial_ports_index = self.current-index; }
         }
 
         Text { text: "Port"; } // col 6
@@ -52,6 +54,8 @@ export component MainPanel inherits Rectangle {
           model: ModelState.baud_rates;
           //model: ["first", "second", "third"];
           current-index: ModelState.baud_rates_index;
+
+          selected() => { ModelState.baud_rates_index = self.current-index; }
         }
 
         Text { text: "Baud"; } // col 8
@@ -59,7 +63,7 @@ export component MainPanel inherits Rectangle {
         Button { // col 9
           text: ModelState.serial_connection_info;
 
-          clicked() => { ModelState.connect_serial(); }
+          clicked() => { ModelState.connect_or_disconnect_serial(); }
         }
 
         Separator { col: 10; }
@@ -151,19 +155,4 @@ export component MainPanel inherits Rectangle {
 
     Separator {}
   } // VerticalLayout
-/*
-  in-out property<int> counter: 42;
-  callback request-increase-value();    
-  VerticalBox {
-    Text {
-      text: "Counter: \{counter}";
-    }
-    Button {
-      text: "Increase value";
-      clicked => {
-        request-increase-value();
-      }
-    }
-  }
-*/
 }
