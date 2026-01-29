@@ -75,11 +75,15 @@ export component MainPanel inherits Rectangle {
         Text { // Col 0
           text: "Click to reset \nButton 2 clicks.";
           font-size: root.text-font-size;
+          color: Theme.text_color;
         }
+
+        Separator {} // Col 1
       
-        Text { // Col 1
+        Text { // Col 2
           text: "No. of clicks: " + button-2-count;
           font-size: root.text-font-size;
+          color: Theme.text_color;
           col: 2;
         }
       }
@@ -110,6 +114,7 @@ export component MainPanel inherits Rectangle {
         Text {
           text: "Toggle on to Send Slider 1 \nvalue over serial when \n\"Send Bytes\" is clicked\n";
           font-size: root.text-font-size;
+          color: Theme.text_color;
           row: 1; 
           col: 0;
         }
@@ -134,6 +139,7 @@ export component MainPanel inherits Rectangle {
         Text {
           text: "Toggle on to send Slider 2 \nvalue over serial when \n\"Send Bytes\" is clicked\n";
           font-size: root.text-font-size;
+          color: Theme.text_color;
           row: 3; 
           col: 0;
         }        
@@ -207,6 +213,7 @@ export component MainPanel inherits Rectangle {
           text: "Value to send: " + ModelState.send_bytes_value;
           font-size: root.text-font-size;
           horizontal-alignment: center;
+          color: Theme.text_color;
           row: 2;
           col: 8;
         }
