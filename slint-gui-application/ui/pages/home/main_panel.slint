@@ -157,6 +157,10 @@ export component MainPanel inherits Rectangle {
           col: 2;
           rowspan: 3;
           value: 60;
+
+          changed(value) => {
+            if (button_3.checked) { ModelState.send_bytes_value = slider_1.value; }
+          }
         }
 
       // Col 3
@@ -193,6 +197,10 @@ export component MainPanel inherits Rectangle {
           col: 6;
           rowspan: 3;
           value: 60;
+
+          changed(value) => {
+            if (button_4.checked) { ModelState.send_bytes_value = slider_2.value; }
+          }          
         }
 
       // Col 7
