@@ -41,6 +41,11 @@ export component DPad {
   in-out property <bool> down-primary: false;
   in-out property <bool> down-colorize-icon: false;
 
+  callback up-clicked();
+  callback left-clicked();
+  callback right-clicked();
+  callback down-clicked();
+
   GridBox {
     padding: 0px;    
 
@@ -54,6 +59,8 @@ export component DPad {
       //icon-size: up-icon-size; 
       primary: up-primary;
       colorize-icon: up-colorize-icon;
+
+      clicked => { up-clicked(); }
     }
 
     left := Button {
@@ -66,6 +73,8 @@ export component DPad {
       //icon-size: left-icon-size; 
       primary: left-primary;
       colorize-icon: left-colorize-icon;
+
+      clicked => { left-clicked(); }
     }
 
     right := Button {
@@ -78,6 +87,8 @@ export component DPad {
       //icon-size: right-icon-size; 
       primary: right-primary;
       colorize-icon: right-colorize-icon;
+
+      clicked => { right-clicked(); }
     }
 
     down := Button {
@@ -90,6 +101,8 @@ export component DPad {
       //icon-size: down-icon-size; 
       primary: down-primary;
       colorize-icon: down-colorize-icon;
+
+      clicked => { down-clicked(); }
     }
   } // Gridbox
 }
