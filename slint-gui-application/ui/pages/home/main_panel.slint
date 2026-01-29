@@ -7,7 +7,7 @@ import { VerticalSlider, HorizontalSlider, DPad } from "../../controls/index.sli
 
 export component MainPanel inherits Rectangle {
   private property <int> button-2-count: 0;
-  private property <length> text-font-size: Theme.default_font_size * (3/4);
+  private property <float> send_bytes_value: 0;
 
   border-bottom-left-radius: Theme.panel_border_radius;
   border-bottom-right-radius: Theme.panel_border_radius;
@@ -74,7 +74,7 @@ export component MainPanel inherits Rectangle {
       Row { // 1
         Text { // Col 0
           text: "Click to reset \nButton 2 clicks.";
-          font-size: root.text-font-size;
+          font-size: Theme.text-font-size;
           color: Theme.text_color;
         }
 
@@ -82,7 +82,7 @@ export component MainPanel inherits Rectangle {
       
         Text { // Col 2
           text: "No. of clicks: " + button-2-count;
-          font-size: root.text-font-size;
+          font-size: Theme.text-font-size;
           color: Theme.text_color;
           col: 2;
         }
@@ -103,17 +103,17 @@ export component MainPanel inherits Rectangle {
           clicked => {
             if (self.checked) {
               button_4.checked = false;
-              ModelState.send_bytes_value = slider_1.value;
+              send_bytes_value = slider_1.value;
             }
             else {
-              ModelState.send_bytes_value = 0;
+              send_bytes_value = 0;
             }
           }
         }
 
         Text {
           text: "Toggle on to Send Slider 1 \nvalue over serial when \n\"Send Bytes\" is clicked\n";
-          font-size: root.text-font-size;
+          font-size: Theme.text-font-size;
           color: Theme.text_color;
           row: 1; 
           col: 0;
@@ -128,17 +128,17 @@ export component MainPanel inherits Rectangle {
           clicked => {
             if (self.checked) {
               button_3.checked = false;
-              ModelState.send_bytes_value = slider_2.value;
+              send_bytes_value = slider_2.value;
             }
             else {
-              ModelState.send_bytes_value = 0;
+              send_bytes_value = 0;
             }
           }          
         }
 
         Text {
           text: "Toggle on to send Slider 2 \nvalue over serial when \n\"Send Bytes\" is clicked\n";
-          font-size: root.text-font-size;
+          font-size: Theme.text-font-size;
           color: Theme.text_color;
           row: 3; 
           col: 0;
@@ -159,7 +159,7 @@ export component MainPanel inherits Rectangle {
           value: 60;
 
           changed(value) => {
-            if (button_3.checked) { ModelState.send_bytes_value = slider_1.value; }
+            if (button_3.checked) { send_bytes_value = slider_1.value; }
           }
         }
 
@@ -182,6 +182,11 @@ export component MainPanel inherits Rectangle {
           left-colorize-icon: true;
           right-colorize-icon: true;
           down-colorize-icon: true;
+
+          up-clicked() => { ModelState.up-clicked(); }
+          left-clicked() => { ModelState.left-clicked(); }
+          right-clicked() => { ModelState.right-clicked(); }
+          down-clicked() => { ModelState.down-clicked(); }
         }
 
       // Col 5
@@ -196,10 +201,10 @@ export component MainPanel inherits Rectangle {
           row: 0;
           col: 6;
           rowspan: 3;
-          value: 60;
+          value: 40;
 
           changed(value) => {
-            if (button_4.checked) { ModelState.send_bytes_value = slider_2.value; }
+            if (button_4.checked) { send_bytes_value = slider_2.value; }
           }          
         }
 
@@ -215,11 +220,13 @@ export component MainPanel inherits Rectangle {
           row: 0;
           col: 8;
           rowspan: 2;
+
+          clicked => { ModelState.send_bytes_over_serial(send_bytes_value); }
         }
 
         Text {
-          text: "Value to send: " + ModelState.send_bytes_value;
-          font-size: root.text-font-size;
+          text: "Value to send: " + send_bytes_value;
+          font-size: Theme.text-font-size;
           horizontal-alignment: center;
           color: Theme.text_color;
           row: 2;
