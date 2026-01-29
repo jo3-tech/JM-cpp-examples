@@ -18,6 +18,8 @@ export component HorizontalSlider {
   in-out property<bool> text-read-only: false;
   in-out property<TextWrap> text-wrap: no-wrap;
 
+  callback changed(float);
+
   GridBox {
     padding: 0px;
 
@@ -42,8 +44,8 @@ export component HorizontalSlider {
         value = text.to-float();
 
         if (!use-float) {
-          let value-int:int = value;
-          value = value-int;
+          let value_int:int = value;
+          value = value_int;
           self.text = value;
         }
 
@@ -58,10 +60,12 @@ export component HorizontalSlider {
 
         slider_used.value = value;
         slider_mask.value = maximum - value;
+
+        changed(value);
       }
     }
     
-    slider_used:= Slider {
+    slider_used := Slider {
       row: 2;
       col: 0;
       enabled: enabled;
@@ -73,13 +77,15 @@ export component HorizontalSlider {
 
       changed => {
         if (!use-float) {
-          let value-int:int = self.value;
-          value = value-int;
+          let value_int:int = self.value;
+          root.value = value_int;
         }
-        else { value = self.value; }
+        else { root.value = self.value; }
         
-        slider_mask.value = maximum - value;
-        slider_text.text = value;
+        slider_mask.value = maximum - root.value;
+        slider_text.text = root.value;
+
+        root.changed(root.value);
       }
     }
 
