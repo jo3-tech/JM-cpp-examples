@@ -58,7 +58,7 @@ void refresh_serial_ports() {
   //ui->set_serial_ports(ui_serial_port_ids_model);
   ui->global<ModelState>().set_serial_ports(ui_serial_ports_names_model);
 }
-//*
+
 void connect_or_disconnect_serial() {
   if (!serial_port_open) {
     if (serial_ports_info.empty()) {
@@ -96,7 +96,16 @@ void connect_or_disconnect_serial() {
     ui->global<ModelState>().set_serial_connection_info(ui_serial_connect_info);
   }
 }
-//*/
+
+void send_bytes_over_serial(const uint8_t* data, size_t length) {
+  if (serial_port_open) {
+    serial_port.write(data, length);
+  }
+  else {
+    std::cerr << "Serial port closed, cannot send data." << std::endl;
+  }
+}
+
 int main(int argc, char **argv)
 {
   // Register callback functions.
@@ -112,6 +121,10 @@ int main(int argc, char **argv)
 
   ui->global<ModelState>().on_connect_or_disconnect_serial([]() {
     connect_or_disconnect_serial();
+  });
+
+  ui->global<ModelState>().on_send_bytes_over_serial([](int value_output) {
+    send_bytes_over_serial(value_output, sizeof(value_output);
   });
 
   // Set initial model state.
