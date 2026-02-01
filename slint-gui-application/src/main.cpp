@@ -123,8 +123,10 @@ int main(int argc, char **argv)
     connect_or_disconnect_serial();
   });
 
-  ui->global<ModelState>().on_send_bytes_over_serial([](int value_output) {
-    send_bytes_over_serial(value_output, sizeof(value_output);
+  ui->global<ModelState>().on_send_byte_over_serial([](int value_output) {
+    uint8_t value = value_output;
+    std::cout << "Send byte over serial: " << value << std::endl;
+    send_bytes_over_serial(&value, 1);
   });
 
   // Set initial model state.
