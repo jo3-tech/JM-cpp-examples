@@ -3,7 +3,7 @@ import { Theme } from "../../theme.slint";
 import { MainPanel } from "main_panel.slint";
 
 export component MainTabs inherits Rectangle {
-  border-radius: Theme.panel_border_radius;
+  border-radius: Theme.panel-border-radius;
   background: Colors.steelblue;
 
   TabWidget {
@@ -20,8 +20,8 @@ export component MainTabs inherits Rectangle {
       title: "Tab 2";
       
       Rectangle {
-        border-bottom-left-radius: Theme.panel_border_radius;
-        border-bottom-right-radius: Theme.panel_border_radius;
+        border-bottom-left-radius: Theme.panel-border-radius;
+        border-bottom-right-radius: Theme.panel-border-radius;
         background: Colors.black;
         
         Text { text: "Tab 2 content."; }

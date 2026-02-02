@@ -2,23 +2,23 @@ import { Layout } from "../../layout.slint";
 import { Theme } from "../../theme.slint";
 
 export component IconPanel inherits Rectangle {
-  border-radius: Theme.panel_border_radius;
-  background: Theme.panel_background;
+  border-radius: Theme.panel-border-radius;
+  background: Theme.panel-background;
 
-  in property <length> image_scale: 0.5px;
+  in property <length> image-scale: 0.5px;
 
   GridLayout {
-    padding: Layout.panel_padding;
+    padding: Layout.panel-padding;
 
     Image {
       source: @image-url("../../images/cogs.png");
       row: 0;
       col: 0;
       vertical-alignment: ImageVerticalAlignment.top;
-      min-width: self.source.width * image_scale;
-      min-height: self.source.height * image_scale;
-      preferred-width: self.source.width * image_scale;
-      preferred-height: self.source.height * image_scale;
+      min-width: self.source.width * image-scale;
+      min-height: self.source.height * image-scale;
+      preferred-width: self.source.width * image-scale;
+      preferred-height: self.source.height * image-scale;
       //image-fit: fill;
       colorize: Colors.goldenrod;
     }
@@ -28,10 +28,10 @@ export component IconPanel inherits Rectangle {
       row: 1;
       col: 2;
       vertical-alignment: ImageVerticalAlignment.bottom;
-      min-width: self.source.width * image_scale;
-      min-height: self.source.height * image_scale;
-      preferred-width: self.source.width * image_scale;
-      preferred-height: self.source.height * image_scale;
+      min-width: self.source.width * image-scale;
+      min-height: self.source.height * image-scale;
+      preferred-width: self.source.width * image-scale;
+      preferred-height: self.source.height * image-scale;
       //image-fit: fill;
       colorize: skyblue;
     }      

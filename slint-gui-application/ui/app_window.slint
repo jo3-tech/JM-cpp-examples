@@ -14,13 +14,13 @@ export component AppWindow inherits Window {
 
   title: Version.name;
 
-  default-font-size: Theme.default_font_size;
+  default-font-size: Theme.default-font-size;
 
-  preferred-width: Layout.preferred_window_width;
-  preferred-height: Layout.preferred_window_height;
+  preferred-width: Layout.preferred-window-width;
+  preferred-height: Layout.preferred-window-height;
   
   Timer {
-    interval: Configuration.splash_page_duration;
+    interval: Configuration.splash-page-duration;
     running: true;
     triggered() => {
         page = Page.Home;

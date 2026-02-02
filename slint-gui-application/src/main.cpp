@@ -66,9 +66,9 @@ void connect_or_disconnect_serial() {
       return;
     }
     // Connect.
-    int port_index = ui->global<ModelState>().get_serial_ports_index();
+    int port_index = ui->global<ModelState>().get_serial-ports-index();
     std::cout << "Port index: " << port_index << std::endl;
-    int baud_index = ui->global<ModelState>().get_baud_rates_index();
+    int baud_index = ui->global<ModelState>().get_baud-rates_index();
     std::cout << "Baud index: " << baud_index << std::endl;
     //*
     std::cout << "Connecting to: " << serial_ports_info[port_index].port << std::endl;
@@ -84,7 +84,7 @@ void connect_or_disconnect_serial() {
     else {
       serial_port_open = true;
       serial_port.flush();
-      ui->global<ModelState>().set_serial_connection_info(ui_serial_disconnect_info);
+      ui->global<ModelState>().set_serial-connection-info(ui_serial_disconnect_info);
     }
     //*/
   }
@@ -93,7 +93,7 @@ void connect_or_disconnect_serial() {
     std::cout << "Disconnecting serial." << std::endl;
     serial_port.close();
     serial_port_open = false;
-    ui->global<ModelState>().set_serial_connection_info(ui_serial_connect_info);
+    ui->global<ModelState>().set_serial-connection-info(ui_serial_connect_info);
   }
 }
 
@@ -110,20 +110,20 @@ int main(int argc, char **argv)
 {
   // Register callback functions.
 
-  ui->global<ModelState>().on_open_github([](slint::SharedString url_output) {
+  ui->global<ModelState>().on_open-github([](slint::SharedString url_output) {
     std::cout << "Open GitHub: " << url_output << std::endl;
     utils::open_url(std::string(url_output));
   });
 
-  ui->global<ModelState>().on_refresh_serial_ports([]() {
+  ui->global<ModelState>().on_refresh-serial-ports([]() {
     refresh_serial_ports();
   });
 
-  ui->global<ModelState>().on_connect_or_disconnect_serial([]() {
+  ui->global<ModelState>().on_connect-or-disconnect-serial([]() {
     connect_or_disconnect_serial();
   });
 
-  ui->global<ModelState>().on_send_byte_over_serial([](int value_output) {
+  ui->global<ModelState>().on_send-byte-over-serial([](int value_output) {
     uint8_t value = value_output;
     std::cout << "Send byte over serial: " << value << std::endl;
     send_bytes_over_serial(&value, 1);
@@ -134,9 +134,9 @@ int main(int argc, char **argv)
   refresh_serial_ports();
 
   auto ui_baud_rates_model = std::make_shared<slint::VectorModel<slint::SharedString>>(baud_rates);
-  ui->global<ModelState>().set_baud_rates(ui_baud_rates_model);
+  ui->global<ModelState>().set_baud-rates(ui_baud_rates_model);
 
-  ui->global<ModelState>().set_serial_connection_info(ui_serial_connect_info);
+  ui->global<ModelState>().set_serial-connection-info(ui_serial_connect_info);
 
   ui->run();
 

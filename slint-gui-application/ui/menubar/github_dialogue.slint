@@ -8,15 +8,13 @@ export component GitHubDialogue inherits Dialog {
   callback show();
   show() => { self.visible = true; }
 
-  callback ok_clicked();
-
   Text { text: "This will open the GitHub page in your browser."; }
 
   StandardButton {
     kind: ok;
 
     clicked() => {
-      ModelState.open_github(Configuration.github_url);
+      ModelState.open-github(Configuration.github-url);
       root.visible = false; }
   }
 

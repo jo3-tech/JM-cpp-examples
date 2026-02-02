@@ -7,14 +7,14 @@ import { VerticalSlider, HorizontalSlider, DPad } from "../../controls/index.sli
 
 export component MainPanel inherits Rectangle {
   private property <int> button-2-count: 0;
-  private property <float> send_bytes_value: 0;
+  private property <float> send-bytes-value: 0;
 
-  border-bottom-left-radius: Theme.panel_border_radius;
-  border-bottom-right-radius: Theme.panel_border_radius;
-  background: Theme.panel_background;
+  border-bottom-left-radius: Theme.panel-border-radius;
+  border-bottom-right-radius: Theme.panel-border-radius;
+  background: Theme.panel-background;
 
   VerticalLayout {
-    padding: Layout.panel_padding;
+    padding: Layout.panel-padding;
     
     // Button 1 and Button 2.
     GridBox {
@@ -39,33 +39,33 @@ export component MainPanel inherits Rectangle {
           text: "Refresh \nSerial Ports";
           rowspan: 2;
 
-          clicked() => { ModelState.refresh_serial_ports(); }
+          clicked() => { ModelState.refresh-serial-ports(); }
         }
 
         ComboBox { // Col 5
-          model: ModelState.serial_ports;
+          model: ModelState.serial-ports;
           //model: ["first", "second", "third"];
-          current-index: ModelState.serial_ports_index;
+          current-index: ModelState.serial-ports-index;
 
-          selected(value) => { ModelState.serial_ports_index = self.current-index; }
+          selected(value) => { ModelState.serial-ports-index = self.current-index; }
         }
 
         Text { text: "Port"; } // Col 6
 
         ComboBox { // Col 7
-          model: ModelState.baud_rates;
+          model: ModelState.baud-rates;
           //model: ["first", "second", "third"];
-          current-index: ModelState.baud_rates_index;
+          current-index: ModelState.baud-rates-index;
 
-          selected() => { ModelState.baud_rates_index = self.current-index; }
+          selected() => { ModelState.baud-rates-index = self.current-index; }
         }
 
         Text { text: "Baud"; } // Col 8
 
         Button { // Col 9
-          text: ModelState.serial_connection_info;
+          text: ModelState.serial-connection-info;
 
-          clicked() => { ModelState.connect_or_disconnect_serial(); }
+          clicked() => { ModelState.connect-or-disconnect-serial(); }
         }
 
         Separator { col: 15; }
@@ -75,7 +75,7 @@ export component MainPanel inherits Rectangle {
         Text { // Col 0
           text: "Click to reset \nButton 2 clicks.";
           font-size: Theme.text-font-size;
-          color: Theme.text_color;
+          color: Theme.text-color;
         }
 
         Separator {} // Col 1
@@ -83,7 +83,7 @@ export component MainPanel inherits Rectangle {
         Text { // Col 2
           text: "No. of clicks: " + button-2-count;
           font-size: Theme.text-font-size;
-          color: Theme.text_color;
+          color: Theme.text-color;
           col: 2;
         }
       }
@@ -103,18 +103,18 @@ export component MainPanel inherits Rectangle {
           clicked => {
             if (self.checked) {
               button_4.checked = false;
-              send_bytes_value = slider_1.value;
+              send-bytes-value = slider_1.value;
             }
             else {
-              send_bytes_value = 0;
+              send-bytes-value = 0;
             }
           }
         }
 
         Text {
-          text: "Toggle on to Send Slider 1 \nvalue over serial when \n\"Send Bytes\" is clicked\n";
+          text: "Toggle on to Send Slider 1 \nvalue over serial when \n\"Send Byte\" is clicked\n";
           font-size: Theme.text-font-size;
-          color: Theme.text_color;
+          color: Theme.text-color;
           row: 1; 
           col: 0;
         }
@@ -128,18 +128,18 @@ export component MainPanel inherits Rectangle {
           clicked => {
             if (self.checked) {
               button_3.checked = false;
-              send_bytes_value = slider_2.value;
+              send-bytes-value = slider_2.value;
             }
             else {
-              send_bytes_value = 0;
+              send-bytes-value = 0;
             }
           }          
         }
 
         Text {
-          text: "Toggle on to send Slider 2 \nvalue over serial when \n\"Send Bytes\" is clicked\n";
+          text: "Toggle on to send Slider 2 \nvalue over serial when \n\"Send Byte\" is clicked\n";
           font-size: Theme.text-font-size;
-          color: Theme.text_color;
+          color: Theme.text-color;
           row: 3; 
           col: 0;
         }        
@@ -159,7 +159,7 @@ export component MainPanel inherits Rectangle {
           value: 60;
 
           changed(value) => {
-            if (button_3.checked) { send_bytes_value = slider_1.value; }
+            if (button_3.checked) { send-bytes-value = slider_1.value; }
           }
         }
 
@@ -204,7 +204,7 @@ export component MainPanel inherits Rectangle {
           value: 40;
 
           changed(value) => {
-            if (button_4.checked) { send_bytes_value = slider_2.value; }
+            if (button_4.checked) { send-bytes-value = slider_2.value; }
           }          
         }
 
@@ -216,19 +216,19 @@ export component MainPanel inherits Rectangle {
 
       // Col 8
         Button {
-          text: "Send Bytes \n over Serial";
+          text: "Send Byte \n over Serial";
           row: 0;
           col: 8;
           rowspan: 2;
 
-          clicked => { ModelState.send_byte_over_serial(send_bytes_value); }
+          clicked => { ModelState.send-byte-over-serial(send-bytes-value); }
         }
 
         Text {
-          text: "Value to send: " + send_bytes_value;
+          text: "Value to send: " + send-bytes-value;
           font-size: Theme.text-font-size;
           horizontal-alignment: center;
-          color: Theme.text_color;
+          color: Theme.text-color;
           row: 2;
           col: 8;
         }
