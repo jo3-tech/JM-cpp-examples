@@ -8,6 +8,13 @@
 #include "app_window.h"
 #include "utils.hpp"
 
+enum class DPadMessage : uint8_t {
+  kUp = 'u',
+  kDown = 'd',
+  Left = 'l',
+  Right = 'r'
+};
+
 auto ui = AppWindow::create();
 
 serial::Serial serial_port;
@@ -66,9 +73,9 @@ void connect_or_disconnect_serial() {
       return;
     }
     // Connect.
-    int port_index = ui->global<ModelState>().get_serial-ports-index();
+    int port_index = ui->global<ModelState>().get_serial_ports_index();
     std::cout << "Port index: " << port_index << std::endl;
-    int baud_index = ui->global<ModelState>().get_baud-rates_index();
+    int baud_index = ui->global<ModelState>().get_baud_rates_index();
     std::cout << "Baud index: " << baud_index << std::endl;
     //*
     std::cout << "Connecting to: " << serial_ports_info[port_index].port << std::endl;
@@ -84,7 +91,7 @@ void connect_or_disconnect_serial() {
     else {
       serial_port_open = true;
       serial_port.flush();
-      ui->global<ModelState>().set_serial-connection-info(ui_serial_disconnect_info);
+      ui->global<ModelState>().set_serial_connection_info(ui_serial_disconnect_info);
     }
     //*/
   }
@@ -93,7 +100,7 @@ void connect_or_disconnect_serial() {
     std::cout << "Disconnecting serial." << std::endl;
     serial_port.close();
     serial_port_open = false;
-    ui->global<ModelState>().set_serial-connection-info(ui_serial_connect_info);
+    ui->global<ModelState>().set_serial_connection_info(ui_serial_connect_info);
   }
 }
 
@@ -110,23 +117,47 @@ int main(int argc, char **argv)
 {
   // Register callback functions.
 
-  ui->global<ModelState>().on_open-github([](slint::SharedString url_output) {
+  ui->global<ModelState>().on_open_github([](slint::SharedString url_output) {
     std::cout << "Open GitHub: " << url_output << std::endl;
     utils::open_url(std::string(url_output));
   });
 
-  ui->global<ModelState>().on_refresh-serial-ports([]() {
+  ui->global<ModelState>().on_refresh_serial_ports([]() {
     refresh_serial_ports();
   });
 
-  ui->global<ModelState>().on_connect-or-disconnect-serial([]() {
+  ui->global<ModelState>().on_connect_or_disconnect_serial([]() {
     connect_or_disconnect_serial();
   });
 
-  ui->global<ModelState>().on_send-byte-over-serial([](int value_output) {
+  ui->global<ModelState>().on_send_byte_over_serial([](int value_output) {
     uint8_t value = value_output;
     std::cout << "Send byte over serial: " << value << std::endl;
     send_bytes_over_serial(&value, 1);
+  });
+
+  ui->global<ModelState>().on_up_clicked([]() {
+    uint8_t up_command = static_cast<uint8_t>(DPadMessage::kUp);
+    std::cout << "Up clicked, sending command: " << up_command << std::endl;
+    send_bytes_over_serial(&up_command, 1);
+  });
+
+  ui->global<ModelState>().on_left_clicked([]() {
+    uint8_t left_command = static_cast<uint8_t>(DPadMessage::Left);
+    std::cout << "Left clicked, sending command: " << left_command << std::endl;
+    send_bytes_over_serial(&left_command, 1);
+  });
+
+  ui->global<ModelState>().on_right_clicked([]() {
+    uint8_t right_command = static_cast<uint8_t>(DPadMessage::Right);
+    std::cout << "Right clicked, sending command: " << right_command << std::endl;
+    send_bytes_over_serial(&right_command, 1);
+  });
+
+  ui->global<ModelState>().on_down_clicked([]() {
+    uint8_t down_command = static_cast<uint8_t>(DPadMessage::kDown);
+    std::cout << "Down clicked, sending command: " << down_command << std::endl;
+    send_bytes_over_serial(&down_command, 1);
   });
 
   // Set initial model state.
@@ -134,9 +165,9 @@ int main(int argc, char **argv)
   refresh_serial_ports();
 
   auto ui_baud_rates_model = std::make_shared<slint::VectorModel<slint::SharedString>>(baud_rates);
-  ui->global<ModelState>().set_baud-rates(ui_baud_rates_model);
+  ui->global<ModelState>().set_baud_rates(ui_baud_rates_model);
 
-  ui->global<ModelState>().set_serial-connection-info(ui_serial_connect_info);
+  ui->global<ModelState>().set_serial_connection_info(ui_serial_connect_info);
 
   ui->run();
 
