@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <iostream>
 #include <string>
+#include <chrono>
 
 #include "serial/serial.h"
 #include "asio.hpp"
@@ -9,10 +10,10 @@
 #include "utils.hpp"
 
 enum class DPadMessage : uint8_t {
-  kUp = 'u',
-  kDown = 'd',
-  Left = 'l',
-  Right = 'r'
+  kUp = 'u', // 117
+  kDown = 'd', // 100
+  Left = 'l', // 108
+  Right = 'r' // 114
 };
 
 auto ui = AppWindow::create();
@@ -28,6 +29,10 @@ std::vector<slint::SharedString> baud_rates = { "115200", "57600", "38400", "192
 int current_baud_rate_index = 0;
 
 serial::Timeout serial_read_timeout = serial::Timeout::simpleTimeout(1000); // (ms).
+
+slint::Timer serial_read_timer;
+auto serial_read_timer_interval = std::chrono::milliseconds(100);
+auto serial_read_timer_mode = slint::TimerMode::Repeated;
 
 slint::SharedString ui_serial_connect_info = "Connect";
 slint::SharedString ui_serial_disconnect_info = "Disconnect";
@@ -104,12 +109,30 @@ void connect_or_disconnect_serial() {
   }
 }
 
-void send_bytes_over_serial(const uint8_t* data, size_t length) {
+size_t send_bytes_over_serial(const uint8_t* data, size_t length) {
   if (serial_port_open) {
-    serial_port.write(data, length);
+    return serial_port.write(data, length);
   }
   else {
     std::cerr << "Serial port closed, cannot send data." << std::endl;
+    return 0;
+  }
+}
+
+size_t read_bytes_from_serial(uint8_t* buffer, size_t length) {
+  if (serial_port_open) {
+    size_t bytes_available = serial_port.available();
+    if (bytes_available >= length) {
+      return serial_port.read(buffer, length);
+    }
+    else {
+      //std::cerr << "No data or not enough data available to read requested length." << std::endl;
+      return 0;
+    }
+  }
+  else {
+    //std::cerr << "Serial port closed, cannot read data." << std::endl;
+    return 0;
   }
 }
 
@@ -132,31 +155,31 @@ int main(int argc, char **argv)
 
   ui->global<ModelState>().on_send_byte_over_serial([](int value_output) {
     uint8_t value = value_output;
-    std::cout << "Send byte over serial: " << value << std::endl;
+    std::cout << "Send byte over serial: " << static_cast<int>(value) << std::endl;
     send_bytes_over_serial(&value, 1);
   });
 
   ui->global<ModelState>().on_up_clicked([]() {
     uint8_t up_command = static_cast<uint8_t>(DPadMessage::kUp);
-    std::cout << "Up clicked, sending command: " << up_command << std::endl;
+    std::cout << "Up clicked, sending command: " << static_cast<int>(up_command) << std::endl;
     send_bytes_over_serial(&up_command, 1);
   });
 
   ui->global<ModelState>().on_left_clicked([]() {
     uint8_t left_command = static_cast<uint8_t>(DPadMessage::Left);
-    std::cout << "Left clicked, sending command: " << left_command << std::endl;
+    std::cout << "Left clicked, sending command: " << static_cast<int>(left_command) << std::endl;
     send_bytes_over_serial(&left_command, 1);
   });
 
   ui->global<ModelState>().on_right_clicked([]() {
     uint8_t right_command = static_cast<uint8_t>(DPadMessage::Right);
-    std::cout << "Right clicked, sending command: " << right_command << std::endl;
+    std::cout << "Right clicked, sending command: " << static_cast<int>(right_command) << std::endl;
     send_bytes_over_serial(&right_command, 1);
   });
 
   ui->global<ModelState>().on_down_clicked([]() {
     uint8_t down_command = static_cast<uint8_t>(DPadMessage::kDown);
-    std::cout << "Down clicked, sending command: " << down_command << std::endl;
+    std::cout << "Down clicked, sending command: " << static_cast<int>(down_command) << std::endl;
     send_bytes_over_serial(&down_command, 1);
   });
 
@@ -168,6 +191,18 @@ int main(int argc, char **argv)
   ui->global<ModelState>().set_baud_rates(ui_baud_rates_model);
 
   ui->global<ModelState>().set_serial_connection_info(ui_serial_connect_info);
+
+  // Initialise timer to periodically read from the serial port.
+
+  serial_read_timer.start(serial_read_timer_mode, serial_read_timer_interval, []() {
+    uint8_t serial_input;
+    size_t bytes_read = read_bytes_from_serial(&serial_input, 1);
+    if (bytes_read > 0) {
+      std::cout << "Byte from serial: " << static_cast<int>(serial_input) << std::endl;
+    }
+  });
+
+  // Run the UI event loop.
 
   ui->run();
 
