@@ -18,9 +18,9 @@ enum class DPadMessage : uint8_t {
 
 auto ui = AppWindow::create();
 
-serial::Serial serial_port;
+serial::Serial serial_port{};
 
-std::vector<serial::PortInfo> serial_ports_info;
+std::vector<serial::PortInfo> serial_ports_info{};
 int current_serial_port_index = 0;
 
 std::string serial_ports_empty_info = "None found.";
@@ -30,7 +30,7 @@ int current_baud_rate_index = 0;
 
 serial::Timeout serial_read_timeout = serial::Timeout::simpleTimeout(1000); // (ms).
 
-slint::Timer serial_read_timer;
+slint::Timer serial_read_timer{};
 auto serial_read_timer_interval = std::chrono::milliseconds(100);
 auto serial_read_timer_mode = slint::TimerMode::Repeated;
 
@@ -48,7 +48,7 @@ void refresh_serial_ports() {
 
   // Get the friendly names into a slint::SharedString
   //auto serial_port_ids_temp = std::vector<slint::SharedString>(serial_port_ids.begin(), serial_port_ids.end());
-  std::vector<slint::SharedString> serial_ports_names;
+  std::vector<slint::SharedString> serial_ports_names{};
 
   if (serial_ports_info.empty()) {
     std::cout << serial_ports_empty_info << std::endl;
@@ -82,7 +82,6 @@ void connect_or_disconnect_serial() {
     std::cout << "Port index: " << port_index << std::endl;
     int baud_index = ui->global<ModelState>().get_baud_rates_index();
     std::cout << "Baud index: " << baud_index << std::endl;
-    //*
     std::cout << "Connecting to: " << serial_ports_info[port_index].port << std::endl;
     std::cout << "Baudrate: " << std::string(baud_rates[baud_index]) << std::endl; 
     serial_port.setPort(serial_ports_info[port_index].port);
@@ -98,7 +97,6 @@ void connect_or_disconnect_serial() {
       serial_port.flush();
       ui->global<ModelState>().set_serial_connection_info(ui_serial_disconnect_info);
     }
-    //*/
   }
   else {
     // Disconnect.
@@ -195,8 +193,23 @@ int main(int argc, char **argv)
   // Initialise timer to periodically read from the serial port.
 
   serial_read_timer.start(serial_read_timer_mode, serial_read_timer_interval, []() {
-    uint8_t serial_input;
-    size_t bytes_read = read_bytes_from_serial(&serial_input, 1);
+    uint8_t serial_input{};
+    size_t bytes_read{};
+    try {
+      bytes_read = read_bytes_from_serial(&serial_input, 1);
+    }
+    catch (const serial::IOException& e) {
+    //catch (const std::exception& e) {
+      serial_port_open = false;
+      serial_port.close();
+      refresh_serial_ports();      
+      ui->global<ModelState>().set_serial_connection_info(ui_serial_connect_info);
+      std::cerr << "Error: " << e.what() << std::endl;
+    }
+    catch (...) {
+      std::cerr << "Unknown exception" << std::endl;
+    }
+    
     if (bytes_read > 0) {
       std::cout << "Byte from serial: " << static_cast<int>(serial_input) << std::endl;
     }
