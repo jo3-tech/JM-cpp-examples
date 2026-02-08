@@ -125,7 +125,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Library targets.
 slint_target_sources(${CMAKE_PROJECT_NAME} 
-  ui/app_window.slint
+  ui/application/app_window.slint
 )
 
 # Custom build targets.
