@@ -10,7 +10,7 @@ import { HomePage, SplashPage } from "pages/index.slint";
 export { ModelState }
 
 export component AppWindow inherits Window {
-  property<Page> page: Page.Splash;
+  in-out property<Page> page: Page.Splash;
 
   title: Version.name;
 
