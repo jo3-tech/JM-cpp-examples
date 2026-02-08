@@ -190,6 +190,11 @@ int main(int argc, char **argv)
 
   ui->global<ModelState>().set_serial_connection_info(ui_serial_connect_info);
 
+  // Verify initial page is the splash page.
+  
+  auto current_page = ui->get_page();
+  if (current_page == Page::Splash) std::cout << "UI is on the Splash page" << std::endl;
+
   // Initialise timer to periodically read from the serial port.
 
   serial_read_timer.start(serial_read_timer_mode, serial_read_timer_interval, []() {
