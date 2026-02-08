@@ -223,7 +223,7 @@ int main(int argc, char **argv)
 
   // Run the UI event loop.
 
-  [[no_return]] ui->run();
+  ui->run();
 
   return 0;
 }
