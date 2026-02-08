@@ -56,9 +56,10 @@ void refresh_serial_ports() {
   }
   else {
     std::cout << "Found " << serial_ports_info.size() << " serial ports: " << std::endl;
-    for (const auto& port_info : serial_ports_info) {
+    for (int i = 0; const auto& port_info : serial_ports_info) {
       serial_ports_names.push_back(slint::SharedString(port_info.description));
-      std::cout << port_info.description << std::endl;
+      std::cout << "Port " << i << ": " << port_info.description << std::endl;
+      i++;
     }
   }
   
@@ -191,7 +192,7 @@ int main(int argc, char **argv)
   ui->global<ModelState>().set_serial_connection_info(ui_serial_connect_info);
 
   // Verify initial page is the splash page.
-  
+
   auto current_page = ui->get_page();
   if (current_page == Page::Splash) std::cout << "UI is on the Splash page" << std::endl;
 
@@ -222,7 +223,7 @@ int main(int argc, char **argv)
 
   // Run the UI event loop.
 
-  ui->run();
+  [[no_return]] ui->run();
 
   return 0;
 }
