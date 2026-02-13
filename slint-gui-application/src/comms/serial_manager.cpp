@@ -74,16 +74,9 @@ common::Status SerialManager::DisconnectSerial() {
   auto status = common::Status::kFailure;
   if (serial_port_open_) {
     std::cout << "Disconnecting serial." << std::endl;
+    serial_port_open_ = false;
     serial_port_.close();
-
-    if(serial_port_.isOpen()) {
-      std::cerr << "Failed to close port." << std::endl;
-      status = common::Status::kFailure;
-    }
-    else {
-      serial_port_open_ = false;
-      status = common::Status::kSuccess;      
-    }
+    status = common::Status::kSuccess;
   }
 
   return status;
