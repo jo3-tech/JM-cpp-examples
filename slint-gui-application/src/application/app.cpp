@@ -33,9 +33,9 @@ int App::Run() {
 void App::Setup() {
   // Register callback functions.
 
-  ui_->global<ModelState>().on_open_github([](slint::SharedString url_output) {
-    std::cout << "Open GitHub: " << url_output << std::endl;
-    application::open_url(std::string(url_output));
+  ui_->global<ModelState>().on_open_github([](slint::SharedString url) {
+    std::cout << "Open GitHub: " << url << std::endl;
+    application::open_url(std::string(url));
   });
 
   ui_->global<ModelState>().on_refresh_serial_ports([this]() {
@@ -63,8 +63,7 @@ void App::Setup() {
     auto ui_serial_ports_names_model = std::make_shared<slint::VectorModel<slint::SharedString>>(ui_serial_ports_names);
 
     // Set the model in the UI.
-    //ui->set_serial_ports(ui_serial_port_ids_model);
-    ui_->global<ModelState>().set_serial_ports(ui_serial_ports_names_model);    
+    ui_->global<ModelState>().set_serial_ports(ui_serial_ports_names_model);
   });
 
   ui_->global<ModelState>().on_connect_or_disconnect_serial([this](int ports_index, int bauds_index) {
