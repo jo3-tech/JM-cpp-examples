@@ -11,7 +11,7 @@ export global ModelState {
 
   callback open-github(string);
   callback refresh-serial-ports();
-  callback connect-or-disconnect-serial(int, int);
+  callback connect-or-disconnect-serial(int, int) -> string;
   callback send-byte-over-serial(int);
   callback up-clicked();
   callback left-clicked();

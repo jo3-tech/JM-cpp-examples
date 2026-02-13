@@ -68,19 +68,19 @@ void App::Setup() {
   });
 
   ui_->global<ModelState>().on_connect_or_disconnect_serial([this](int ports_index, int bauds_index) {
+    auto connection_info = slint::SharedString(KSerialConnectInfo);
     if (serial_manager_.serial_port_open()) {
       // Disconnect.
-      common::Status status = serial_manager_.DisconnectSerial();
-      if (status == common::Status::kSuccess)
-        ui_->global<ModelState>().set_serial_connection_info(slint::SharedString(KSerialConnectInfo));
+      serial_manager_.DisconnectSerial();
     }
     else {
       // Connect.
       uint32_t baud_rate = std::stoi(std::string(kBaudRates[bauds_index]));
       common::Status status = serial_manager_.ConnectSerial(ports_index, baud_rate, kSerialReadTimeout_ms);
-      if (status == common::Status::kSuccess)
-        ui_->global<ModelState>().set_serial_connection_info(slint::SharedString(KSerialDisconnectInfo));
+      if (status == common::Status::kSuccess) connection_info = slint::SharedString(KSerialDisconnectInfo);
     }
+
+    return connection_info;
   });
 
   ui_->global<ModelState>().on_send_byte_over_serial([this](int value_output) {
