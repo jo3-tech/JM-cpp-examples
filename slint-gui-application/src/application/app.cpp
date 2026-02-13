@@ -67,10 +67,7 @@ void App::Setup() {
     ui_->global<ModelState>().set_serial_ports(ui_serial_ports_names_model);    
   });
 
-  ui_->global<ModelState>().on_connect_or_disconnect_serial([this]() {
-    // TODO(JM): Make serial_ports_index and baud_rate_index private in main_panel.slint
-    // make connect_or_disconnect_serial(int int) and use it to return the values
-    // so I don't have to call get_...
+  ui_->global<ModelState>().on_connect_or_disconnect_serial([this](int ports_index, int bauds_index) {
     if (serial_manager_.serial_port_open()) {
       // Disconnect.
       common::Status status = serial_manager_.DisconnectSerial();
@@ -79,10 +76,8 @@ void App::Setup() {
     }
     else {
       // Connect.
-      int port_index = ui_->global<ModelState>().get_serial_ports_index();
-      int baud_index = ui_->global<ModelState>().get_baud_rates_index();
-      uint32_t baud_rate = std::stoi(std::string(kBaudRates[baud_index]));
-      common::Status status = serial_manager_.ConnectSerial(port_index, baud_rate, kSerialReadTimeout_ms);
+      uint32_t baud_rate = std::stoi(std::string(kBaudRates[bauds_index]));
+      common::Status status = serial_manager_.ConnectSerial(ports_index, baud_rate, kSerialReadTimeout_ms);
       if (status == common::Status::kSuccess)
         ui_->global<ModelState>().set_serial_connection_info(slint::SharedString(KSerialDisconnectInfo));
     }

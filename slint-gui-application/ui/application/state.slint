@@ -6,14 +6,12 @@ export component ViewState {
 // App logic/model state (C++)
 export global ModelState {
   in property <[string]> serial-ports;
-  in property <int> serial-ports-index;
   in property <[string]> baud-rates;
-  in property <int> baud-rates-index;
   in property <string> serial-connection-info: "Connect";
 
   callback open-github(string);
   callback refresh-serial-ports();
-  callback connect-or-disconnect-serial();
+  callback connect-or-disconnect-serial(int, int);
   callback send-byte-over-serial(int);
   callback up-clicked();
   callback left-clicked();
