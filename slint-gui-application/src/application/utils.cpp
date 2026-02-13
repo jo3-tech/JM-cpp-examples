@@ -1,3 +1,11 @@
+// Copyright (C) 2026 Joseph Morgridge
+//
+// Licensed under MIT License.
+// See the LICENSE file in the project root for full license details.
+
+/// @file utils.cpp
+/// @brief Utility functions for the application.
+
 #include "utils.hpp"
 
 #if defined(_WIN32)
@@ -13,7 +21,7 @@
 
 #include <string>
 
-namespace utils {
+namespace slint_gui_app::application {
 
 void open_url(const std::string& url) {
 #if defined(_WIN32)
@@ -27,4 +35,4 @@ void open_url(const std::string& url) {
 #endif
 }
 
-} // namespace utils.
+} // namespace slint_gui_app::application

@@ -107,8 +107,10 @@ add_executable(${CMAKE_PROJECT_NAME})
 
 # Project sources.
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-  src/main.cpp
-  src/utils.cpp
+  src/application/main.cpp
+  src/application/app.cpp
+  src/application/utils.cpp
+  src/comms/serial_manager.cpp
 )
 
 # Project include paths.
