@@ -46,6 +46,7 @@ export component MainPanel inherits Rectangle {
         ComboBox { // Col 5
           model: ModelState.serial-ports;
           current-index: root.serial-ports-index;
+          enabled: ModelState.serial-connected ? false : true;
 
           selected(value) => { root.serial-ports-index = self.current-index; }
         }
@@ -55,6 +56,7 @@ export component MainPanel inherits Rectangle {
         ComboBox { // Col 7
           model: ModelState.baud-rates;
           current-index: root.baud-rates-index;
+          enabled: ModelState.serial-connected ? false : true;
 
           selected() => { root.baud-rates-index = self.current-index; }
         }
