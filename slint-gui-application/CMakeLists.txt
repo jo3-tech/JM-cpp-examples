@@ -82,26 +82,6 @@ endif()
 
 add_library(Serial::Serial ALIAS Serial)
 
-# Asio for networking and asynchronous I/O.
-FetchContent_Declare(
-  asio_src
-  GIT_REPOSITORY https://github.com/chriskohlhoff/asio.git
-  GIT_TAG master
-)
-
-FetchContent_GetProperties(asio_src)
-if(NOT asio_src_POPULATED)
-  FetchContent_Populate(asio_src)
-endif()
-
-add_library(Asio INTERFACE)
-
-target_include_directories(Asio INTERFACE
-  ${asio_src_SOURCE_DIR}/include
-)
-
-add_library(Asio::Asio ALIAS Asio)
-
 # Project executable.
 add_executable(${CMAKE_PROJECT_NAME})
 
@@ -122,7 +102,6 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE 
   Slint::Slint
   Serial::Serial
-  Asio::Asio
 )
 
 # Library targets.

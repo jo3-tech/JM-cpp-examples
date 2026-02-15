@@ -12,7 +12,6 @@
 #include <cstddef>
 
 #include "serial/serial.h"
-#include "asio.hpp"
 
 #include "common/types.hpp"
 
