@@ -1,0 +1,33 @@
+name: Build examples
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Build slint-gui-application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl cmake ninja-build g++
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+      - name: Configure CMake
+        working-directory: slint-gui-application
+        run: |
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        working-directory: slint-gui-application
+        run: |
+          cmake --build build --config Release
