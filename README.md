@@ -17,12 +17,12 @@ The following libraries are used:
 
 It has been developed to work on Windows, Linux and macOS. It has been tested on Windows 11 and Linux (Ubuntu 22.04 LTS).
 
-Pre-requisites for all platforms:
+The following are pre-requisites for all platforms in order to build this project:
 
-- A C++ compiler that supports C++ 20.
-- [Rust](https://rustup.rs)
 - [CMake](https://cmake.org) (3.21 or newer)
+- [Rust](https://rustup.rs)
 - [Ninja](https://ninja-build.org)
+- A C++ compiler that supports C++ 20.
 
 The following is a simple counterpart program for the [Arduino platform](https://www.arduino.cc), for testing the serial communication aspect of this application via the GUI:
 
