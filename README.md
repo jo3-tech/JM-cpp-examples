@@ -1,5 +1,7 @@
 # C++ Examples
 
+[![Build examples](https://github.com/jo3-tech/jm-cpp-examples/actions/workflows/build-examples.yaml/badge.svg)](https://github.com/jo3-tech/jm-cpp-examples/actions/workflows/build-examples.yaml)
+
 Useful C++ examples and algorithm implementations.
 
 This repository is a collection of examples, usually written during feasibility studies for the implementation of a library or project.
