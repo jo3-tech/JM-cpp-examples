@@ -7,11 +7,11 @@ export component ViewState {
 export global ModelState {
   in property <[string]> serial-ports;
   in property <[string]> baud-rates;
-  in property <string> serial-connection-info: "Connect";
+  in property <bool> serial-connected: false;
 
   callback open-github(string);
   callback refresh-serial-ports();
-  callback connect-or-disconnect-serial(int, int) -> string;
+  callback connect-or-disconnect-serial(int, int) -> bool;
   callback send-byte-over-serial(int);
   callback up-clicked();
   callback left-clicked();

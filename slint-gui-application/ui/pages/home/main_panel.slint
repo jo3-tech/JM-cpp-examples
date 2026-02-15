@@ -62,10 +62,10 @@ export component MainPanel inherits Rectangle {
         Text { text: "Baud"; } // Col 8
 
         Button { // Col 9
-          text: ModelState.serial-connection-info;
+          text: ModelState.serial-connected ? "Disconnect" : "Connect";
 
           clicked() => {
-            ModelState.serial-connection-info = ModelState.connect-or-disconnect-serial(root.serial-ports-index, root.baud-rates-index);
+            ModelState.serial-connected = ModelState.connect-or-disconnect-serial(root.serial-ports-index, root.baud-rates-index);
           }
         }
 

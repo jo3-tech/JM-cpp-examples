@@ -67,7 +67,7 @@ void App::Setup() {
   });
 
   ui_->global<ModelState>().on_connect_or_disconnect_serial([this](int ports_index, int bauds_index) {
-    auto connection_info = slint::SharedString(KSerialConnectInfo);
+    bool connected = false;
     if (serial_manager_.serial_port_open()) {
       // Disconnect.
       serial_manager_.DisconnectSerial();
@@ -76,10 +76,10 @@ void App::Setup() {
       // Connect.
       uint32_t baud_rate = std::stoi(std::string(kBaudRates[bauds_index]));
       common::Status status = serial_manager_.ConnectSerial(ports_index, baud_rate, kSerialReadTimeout_ms);
-      if (status == common::Status::kSuccess) connection_info = slint::SharedString(KSerialDisconnectInfo);
+      if (status == common::Status::kSuccess) connected = true;
     }
 
-    return connection_info;
+    return connected;
   });
 
   ui_->global<ModelState>().on_send_byte_over_serial([this](int value_output) {
@@ -120,8 +120,6 @@ void App::Setup() {
   auto ui_baud_rates_model = std::make_shared<slint::VectorModel<slint::SharedString>>(ui_baud_rates);
   ui_->global<ModelState>().set_baud_rates(ui_baud_rates_model);
 
-  ui_->global<ModelState>().set_serial_connection_info(slint::SharedString(KSerialConnectInfo));
-
   // Verify initial page is the splash page.
   
   auto current_page = ui_->get_page();
@@ -136,7 +134,8 @@ void App::Setup() {
       std::cout << "Byte from serial: " << static_cast<int>(serial_input) << std::endl;
     }
     else if (bytes_read < 0) {
-      ui_->global<ModelState>().set_serial_connection_info(slint::SharedString(KSerialConnectInfo));
+      ui_->global<ModelState>().set_serial_connected(false);
+      ui_->global<ModelState>().invoke_refresh_serial_ports();
     }
   });
 }
