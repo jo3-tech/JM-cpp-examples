@@ -8,8 +8,6 @@ This repository is a collection of examples, usually written during feasibility 
 
 ![slint-gui-application demo](slint-gui-application/images/slint-gui-application%201080%20x%20720%20gif.gif)
 
-![slint-gui-application demo](slint-gui-application/images/slint-gui-application%201080p%20gif.gif)
-
 This example shows how to create a native cross platform graphical user interface (GUI) in C++. It also shows how to send/receive data over a USB/serial port.
 
 The following libraries are used:
